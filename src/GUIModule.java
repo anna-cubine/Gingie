@@ -81,6 +81,12 @@ public class GUIModule {
 				button.addActionListener(e -> switchScreen(new RecipeListScreen()));
 			}
 			
+			homeButton.addActionListener(e -> switchScreen(new MainCategoriesScreen ()));
+			backButton.addActionListener(e -> switchScreen(new MainCategoriesScreen()));
+			forwardButton.addActionListener(e -> switchScreen(new RecipeListScreen()));
+			
+			
+			
 			add(topPanel, BorderLayout.NORTH);
 			add(categoryPanel, BorderLayout.CENTER);
 		}
@@ -111,6 +117,7 @@ public class GUIModule {
 			
 			topPanel.add(topLeft, BorderLayout.WEST);
 			topPanel.add(new JLabel("Categories"), BorderLayout.CENTER);
+			topPanel.add(topRight, BorderLayout.EAST);
 			
 			JPanel recipePanel = new JPanel(new GridLayout(2, 3, 10, 10));
 			recipePanel.setBackground(Color.GRAY);
@@ -140,6 +147,9 @@ public class GUIModule {
 			
 			add(topPanel, BorderLayout.NORTH);
 			add(recipePanel, BorderLayout.CENTER);
+			homeButton.addActionListener(e -> switchScreen(new MainCategoriesScreen ()));
+			backButton.addActionListener(e -> switchScreen(new MainCategoriesScreen()));
+			forwardButton.addActionListener(e -> switchScreen(new RecipeListScreen()));
 		}
 	}
 	
@@ -161,11 +171,13 @@ public class GUIModule {
 			topLeft.add(backButton);
 			topLeft.add(forwardButton);
 			topLeft.add(searchField);
-			topPanel.add(topLeft, BorderLayout.WEST);
 			
 			JPanel topRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 			topRight.add(profileButton);
 			topRight.add(homeButton);
+			
+			topPanel.add(topLeft, BorderLayout.WEST);
+			topPanel.add(topRight, BorderLayout.EAST);
 			
 			JPanel detailsPanel = new JPanel(new BorderLayout());
 			detailsPanel.setBackground(Color.GRAY);
@@ -189,6 +201,9 @@ public class GUIModule {
 			add(topPanel, BorderLayout.NORTH);
 			add(detailsPanel, BorderLayout.CENTER);
 			add(textPanel, BorderLayout.SOUTH);
+			homeButton.addActionListener(e -> switchScreen(new MainCategoriesScreen ()));
+			backButton.addActionListener(e -> switchScreen(new MainCategoriesScreen()));
+			forwardButton.addActionListener(e -> switchScreen(new RecipeListScreen()));
 		}
 	}
 }
