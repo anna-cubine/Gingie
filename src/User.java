@@ -67,7 +67,7 @@ public class User {
 
 class Favorites {
 	private int userID;
-	private List<Integer> recipeIDs;
+	private final List<Integer> recipeIDs;
 	
 	public Favorites(int userID) {
 		this.userID = userID;

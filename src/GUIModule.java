@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GUIModule {
-	private JFrame frame;
+	private final JFrame frame;
 	private JPanel mainPanel;
 	
 	public GUIModule() {
-		frame = new JFrame("Recipe Manager");
+		frame = new JFrame("Gingie");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(900, 600);
 		
@@ -51,24 +51,28 @@ public class GUIModule {
 			setLayout(new BorderLayout());
 			
 			JPanel topPanel = new JPanel(new BorderLayout());
-			topPanel.setBackground(Color.LIGHT_GRAY);
+			topPanel.setBackground( Color.orange);
 			
 			JButton backButton = new JButton("⬅️");
+			JButton forwardButton = new JButton("➡️");
 			JButton profileButton = new JButton("👤");
 			JTextField searchField = new JTextField("Search", 20);
+			JButton homeButton = new JButton("🏠");
 			
 			JPanel topLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			topLeft.add(backButton);
+			topLeft.add(forwardButton);
 			topLeft.add(searchField);
 			
 			JPanel topRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 			topRight.add(profileButton);
+			topRight.add(homeButton);
 			
 			topPanel.add(topLeft, BorderLayout.WEST);
 			topPanel.add(topRight, BorderLayout.EAST);
 			
 			JPanel categoryPanel = new JPanel(new GridLayout(2, 4, 10, 10));
-			categoryPanel.setBackground(Color.GRAY);
+			categoryPanel.setBackground(Color.ORANGE);
 			String[] categories = {"Breakfast", "Lunch", "Dinner", "Dessert", "Snacks", "Drinks", "All"};
 			for (String category : categories) {
 				JButton button = new JButton(category);
@@ -88,14 +92,22 @@ public class GUIModule {
 			setLayout(new BorderLayout());
 			
 			JPanel topPanel = new JPanel(new BorderLayout());
-			topPanel.setBackground(Color.LIGHT_GRAY);
+			topPanel.setBackground(Color.ORANGE);
 			
 			JButton backButton = new JButton("⬅️");
+			JButton forwardButton = new JButton("➡️");
+			JButton profileButton = new JButton("👤");
 			JTextField searchField = new JTextField("Search", 20);
+			JButton homeButton = new JButton("🏠");
 			
 			JPanel topLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			topLeft.add(backButton);
+			topLeft.add(forwardButton);
 			topLeft.add(searchField);
+			
+			JPanel topRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			topRight.add(profileButton);
+			topRight.add(homeButton);
 			
 			topPanel.add(topLeft, BorderLayout.WEST);
 			topPanel.add(new JLabel("Categories"), BorderLayout.CENTER);
@@ -140,13 +152,20 @@ public class GUIModule {
 			topPanel.setBackground(Color.LIGHT_GRAY);
 			
 			JButton backButton = new JButton("⬅️");
+			JButton forwardButton = new JButton("➡️");
+			JButton profileButton = new JButton("👤");
 			JTextField searchField = new JTextField("Search", 20);
+			JButton homeButton = new JButton("🏠");
 			
 			JPanel topLeft = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			topLeft.add(backButton);
+			topLeft.add(forwardButton);
 			topLeft.add(searchField);
-			
 			topPanel.add(topLeft, BorderLayout.WEST);
+			
+			JPanel topRight = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			topRight.add(profileButton);
+			topRight.add(homeButton);
 			
 			JPanel detailsPanel = new JPanel(new BorderLayout());
 			detailsPanel.setBackground(Color.GRAY);
@@ -158,7 +177,7 @@ public class GUIModule {
 			JPanel textPanel = new JPanel(new GridLayout(1, 3));
 			JTextArea ingredientsArea = new JTextArea("Ingredients:\n- Ing 1\n- Ing 2\n- Ing 3");
 			JTextArea directionsArea = new JTextArea("Directions:\n1. Step one\n2. Step two\n3. Step three");
-			JTextArea reviewsArea = new JTextArea("Reviews:\nGreat recipe!");
+			JTextArea reviewsArea = new JTextArea("Reviews:");
 			
 			textPanel.add(ingredientsArea);
 			textPanel.add(directionsArea);

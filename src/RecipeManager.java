@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecipeManager {
-	private Database database;
+	private final Database database;
 	
 	public RecipeManager(Database database) {
 		this.database = database;
