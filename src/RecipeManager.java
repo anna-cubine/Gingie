@@ -28,6 +28,17 @@ public class RecipeManager {
 class Database {
 	public void connect() {
 		// Connect to the database
+		String url = "jdbc:mysql://75.253.5.172:36750/gingie";
+		String username = "jam";
+		String password = "Sql3396!";
+		
+		// Create a connection
+		try{
+			java.sql.Connection con = java.sql.DriverManager.getConnection(url, username, password);
+			System.out.println("Connected successfully");
+		}catch(Exception e) {
+			System.out.println ( "exception: " + e.getMessage ( ) );
+		}
 	}
 	
 	public List<Recipe> queryRecipes(String keyword) {
