@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Page</title>
+    <title>Title</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,28 +10,26 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
+            width: 100%;
             max-width: 1000px;
             margin: 0 auto;
             background-color: #f5f5f5;
+            border: 1px solid #ccc;
             border-radius: 8px;
             overflow: hidden;
         }
-
         .header {
             background-color: #ff8c42;
             display: flex;
             align-items: center;
             padding: 10px;
         }
-
         .logo {
             width: 40px;
             height: 40px;
             margin-right: 10px;
         }
-
         .search-bar {
             flex-grow: 1;
             padding: 8px;
@@ -40,7 +37,6 @@
             border-radius: 4px;
             margin-right: 10px;
         }
-
         .favorite-button {
             background-color: transparent;
             border: none;
@@ -48,109 +44,62 @@
             cursor: pointer;
             color: black;
         }
-
-        .main-content {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 20px;
-        }
-
-        .food-picture {
-            background-color: #ccc;
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #555;
-        }
-
-        .dish-info {
-            margin-top: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .dish-info span {
+        .dishContainer{
             display: block;
-            font-size: 1rem;
-            color: #888;
+            margin-left: auto;
+            margin-right: auto;;
+            background: linear-gradient(to
+            top, black, transparent), url("./images/oyakodon01-800x530.jpg");
+            position: relative;
+            width: 800px;
+            height: 550px;
+            color: white;
         }
-
-        .details {
+        .dishContainer h2{
+            position: absolute;
+            bottom:30px;
+            left:3px;
+            font-size: large;
+        }
+        .dishContainer h3{
+            position: absolute;
+            bottom:0;
+            left:3px;
+        }
+        .dishName{
+            bottom: 8px;
+            left: 16px;
+            font-size: 18px;
+        }
+        .row{
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
         }
 
-        .details div {
-            width: 30%;
-            background-color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .details h3 {
-            margin-top: 0;
-            font-size: 1.2rem;
-            border-bottom: 2px solid #ff8c42;
-            margin-bottom: 10px;
-        }
-
-        .details ul,
-        .details ol {
-            padding-left: 20px;
-            margin: 0;
-        }
-
-        .details ul li,
-        .details ol li {
-            margin-bottom: 5px;
-        }
     </style>
 </head>
 <body>
-<div class="container">
-    <header class="header">
-        <img src="logo.png" alt="Logo" class="logo">
-        <input type="text" placeholder="Search" class="search-bar">
-        <button class="favorite-button">★</button>
-    </header>
-    <main class="main-content">
-        <div>
-            <div class="food-picture">[FOOD PICTURE]</div>
-            <div class="dish-info">
-                [DISH NAME]
-                <span>[RATING]</span>
-            </div>
+    <div class="container">
+        <header class="header">
+            <img src="./images/Gingie_icon.png" alt="Logo" class="logo">
+            <input type="text" placeholder="Search" class="search-bar">
+            <button class="favorite-button">★</button>
+        </header>
+    </div>
+    <div class="dishContainer">
+        <h2 class="dishName">Dish name</h2>
+        <h3 class="dishRating">Rating</h3>
+    </div>
+    <div class="row">
+        <div class="ingredients">
+            <h1>Ingredients</h1>
         </div>
-        <div class="details">
-            <div>
-                <h3>Ingredients:</h3>
-                <ul>
-                    <li>Ing. 1</li>
-                    <li>Ing. 2</li>
-                    <li>Ing. 3</li>
-                </ul>
-            </div>
-            <div>
-                <h3>Directions:</h3>
-                <ol>
-                    <li>Step one</li>
-                    <li>Step two</li>
-                    <li>Step three</li>
-                </ol>
-            </div>
-            <div>
-                <h3>Reviews:</h3>
-                <p>No reviews yet.</p>
-            </div>
+        <div class="instructions">
+            <h1>Instructions</h1>
         </div>
-    </main>
-</div>
+        <div class="comments">
+            <h1>Comments</h1>
+        </div>
+    </div>
 </body>
 </html>
