@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d3d3d3;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #ff8c42;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .search-bar {
+            flex-grow: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .favorite-button {
+            background-color: transparent;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            margin-left: 10px;
+            color: black;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .category-button {
+            background-color: #ff8c42;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .category-button:hover {
+            background-color: #ff7034;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header class="header">
+        <img src="logo.png" alt="Logo" class="logo">
+        <input type="text" placeholder="Search" class="search-bar">
+        <button class="favorite-button">★</button>
+    </header>
+    <main>
+        <h2>Categories</h2>
+        <div class="categories">
+            <button class="category-button">Breakfast</button>
+            <button class="category-button">Lunch</button>
+            <button class="category-button">Dinner</button>
+            <button class="category-button">Dessert</button>
+            <button class="category-button">Snacks</button>
+            <button class="category-button">Drinks</button>
+            <button class="category-button">All</button>
+        </div>
+    </main>
+</div>
+</body>
+</html>
