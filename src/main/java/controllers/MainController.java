@@ -1,15 +1,30 @@
 package controllers;
 
+import models.RecipeModel;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import services.RecipeService;
 
-@RestController
+import java.util.List;
+
+@Controller
 public class MainController {
+    private final RecipeService recipeService;
 
-    @GetMapping("/")
+    public MainController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
+
+    @GetMapping("/category")
     public String index() {
-        return "index";
+        return "category";
+    }
+
+    @GetMapping("/recipe")
+    public String recipe(Model model) {
+        List<RecipeModel> recipes = recipeService.getRecipe();
+        model.addAttribute("recipes", recipes);
+        return "recipe";
     }
 }

@@ -1,11 +1,47 @@
 package services;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import models.RecipeModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
-public class RecipeDatabase {
+import java.util.List;
+
+@Repository
+public class RecipeService {
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public RecipeService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    /**
+     * Getting data from the database for the recipes. Using jdbcTemplate
+     * and an sql query to bring into java
+     * @return RecipeModel data
+     */
+    public List<RecipeModel> getRecipe() {
+        String sql = "SELECT * FROM Recipes";
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new RecipeModel(
+                rs.getInt("recipeID"),
+                rs.getString("name"),
+                rs.getString("ingredients"),
+                rs.getString("instructions"),
+                rs.getInt("categoryID"),
+                rs.getDouble("averageRating")));
+    }
+
+
+
+
+
+
+
+
+
+    /*
     public static Connection con = null;
 
     public Connection connect() {
@@ -23,21 +59,11 @@ public class RecipeDatabase {
         }
         return con;
     }
-    /*
+
     public List<Recipe> queryRecipes(String keyword) {
         return new ArrayList<>();
-    }*/
+    }
 
-    /**
-     * Add recipe to the database
-     *
-     * @param recipeID Unique ID for each recipe
-     * @param name Dish name
-     * @param ingredients Ingredients, will have to format before sending to this recipe
-     * @param instructions Recipe directions, same as ingredients
-     * @param categoryID Each recipe will be delegated to one category
-     * @param averageRating Recipe will be given an average star rating
-     */
     public void addRecipe(String recipeID, String name, String ingredients, String instructions, String categoryID, String averageRating) throws SQLException {
         String query = "INSERT INTO table_name(recipeID, name, ingredients, indtructions, categoryID, averageRating" +
                 "VALUES(?, ?, ?, ?, ?, ?);";
@@ -61,10 +87,10 @@ public class RecipeDatabase {
     }
 
     public void update(int id, Object data) {
-        // Update data in the database
+        Update data in the database
     }
 
     public void delete(int id) {
-        // Delete data from the database
-    }
+        Delete data from the database
+    }*/
 }
