@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <style>
         body {
@@ -10,96 +11,178 @@
             margin: 0;
             padding: 0;
         }
+
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 8000px;
             margin: 0 auto;
             background-color: #f5f5f5;
             border: 1px solid #ccc;
             border-radius: 8px;
-            overflow: hidden;
+            overflow: visible;
         }
+
         .header {
             background-color: #ff8c42;
             display: flex;
+            padding: 8px; /* Reduced padding */
+            justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            height: 60px; /* Set height for consistency */
         }
-        .logo {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
+
+        .header .logo img {
+            width: 50px; /* Smaller logo size */
+            height: 50px;
         }
-        .search-bar {
-            flex-grow: 1;
-            padding: 8px;
+
+        .header .search-bar input[type="text"] {
+            padding: 8px; /* Smaller padding */
+            width: 500px; /* Adjusted for smaller header */
+            font-size: 0.9em; /* Smaller text */
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Reduced gap for compact layout */
+            margin-right: 20px; /* Adjusted right margin */
+            position: relative;
+        }
+
+        .header-icons button {
+            background-color: #ff8c42;
             border: none;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-        .favorite-button {
-            background-color: transparent;
-            border: none;
-            font-size: 1.5rem;
+            padding: 5px; /* Smaller padding */
+            border-radius: 5px;
             cursor: pointer;
-            color: black;
+            font-size: 1.2em; /* Adjusted icon size */
+            color: white;
         }
-        .dishContainer{
+
+        .header-icons button:hover {
+            background-color: #e88a3a;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%; /* Align dropdown below the button */
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            border-radius: 5px;
+            z-index: 1000;
+            width: 150px;
+        }
+
+        .dropdown a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1em;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #f2f2f2;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .dishContainer {
             display: block;
             margin-left: auto;
-            margin-right: auto;;
-            background: linear-gradient(to
-            top, black, transparent), url("/images/oyakodon01-800x530.jpg");
+            margin-right: auto;
+            background: linear-gradient(to top, black, transparent), url("/images/oyakodon01-800x530.jpg");
             position: relative;
             width: 800px;
             height: 550px;
             color: white;
         }
-        .dishContainer h2{
+
+        .dishContainer h2 {
             position: absolute;
-            bottom:30px;
-            left:3px;
+            bottom: 30px;
+            left: 3px;
             font-size: large;
         }
-        .dishContainer h3{
+
+        .dishContainer h3 {
             position: absolute;
-            bottom:0;
-            left:3px;
+            bottom: 0;
+            left: 3px;
         }
-        .dishName{
+
+        .dishName {
             bottom: 8px;
             left: 16px;
             font-size: 18px;
         }
-        .row{
+
+        .row {
             display: flex;
             justify-content: space-between;
         }
-
     </style>
 </head>
 <body>
-    <div class="container">
-        <header class="header">
-            <img src="/images/Gingie_icon.png" alt="Logo" class="logo">
-            <input type="text" placeholder="Search" class="search-bar">
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <img src="/images/Gingie_icon.png" alt="Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+        </div>
+        <div class="header-icons">
             <button class="favorite-button">★</button>
-        </header>
-    </div>
-    <div class="dishContainer">
-        <h2 class="dishName">Dish name</h2>
-        <h3 class="dishRating">Rating</h3>
-    </div>
-    <div class="row">
-        <div class="ingredients">
-            <h1>Ingredients</h1>
+            <button class="button" onclick="toggleDropdown()">👤</button>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+                <a href="userProfile.html">Profile</a>
+            </div>
         </div>
-        <div class="instructions">
-            <h1>Instructions</h1>
-        </div>
-        <div class="comments">
-            <h1>Comments</h1>
-        </div>
+    </header>
+</div>
+<div class="dishContainer">
+    <h2 class="dishName">Dish name</h2>
+    <h3 class="dishRating">Rating</h3>
+</div>
+<div class="row">
+    <div class="ingredients">
+        <h1>Ingredients</h1>
     </div>
+    <div class="instructions">
+        <h1>Instructions</h1>
+    </div>
+    <div class="comments">
+        <h1>Comments</h1>
+    </div>
+</div>
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdownMenu');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.closest('.header-icons')) {
+            const dropdown = document.getElementById('dropdownMenu');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            }
+        }
+    };
+</script>
 </body>
 </html>
