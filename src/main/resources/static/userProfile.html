@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #d3d3d3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #c4c4c4;
+      padding: 20px;
+      border-radius: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 20px;
+      width: 600px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .container label {
+      font-weight: bold;
+      align-self: center;
+    }
+
+    .container input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d3d3d3;
+      border-radius: 5px;
+      box-sizing: border-box;
+      background-color: #d3d3d3;
+    }
+
+    .container .buttons {
+      grid-column: span 2;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .container button {
+      background-color: #f79c42;
+      color: black;
+      padding: 10px 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 45%;
+    }
+
+    .container button:hover {
+      background-color: #d3d3d3;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <label for="username">Username:</label>
+  <input type="text" id="username" value= writonly>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" value= writonly>
+
+  <div class="buttons">
+    <button>Save</button>
+    <button>Logout</button>
+  </div>
+</div>
+
+</body>
+</html>

@@ -18,13 +18,13 @@ public class RecipeService {
 
     /**
      * Getting data from the database for the recipes. Using jdbcTemplate
-     * and an sql query to bring into java
+     * and a sql query to bring into java
      * @return RecipeModel data
      */
     public List<RecipeModel> getRecipe() {
         String sql = "SELECT * FROM Recipes";
 
-        return jdbcTemplate.query(sql, (rs, rowNum) -> new RecipeModel(
+        return jdbcTemplate.query(sql, (rs, _) -> new RecipeModel(
                 rs.getInt("recipeID"),
                 rs.getString("name"),
                 rs.getString("ingredients"),
@@ -65,7 +65,7 @@ public class RecipeService {
     }
 
     public void addRecipe(String recipeID, String name, String ingredients, String instructions, String categoryID, String averageRating) throws SQLException {
-        String query = "INSERT INTO table_name(recipeID, name, ingredients, indtructions, categoryID, averageRating" +
+        String query = "INSERT INTO table_name(recipeID, name, ingredients, instructions, categoryID, averageRating" +
                 "VALUES(?, ?, ?, ?, ?, ?);";
 
         //Connect to database first

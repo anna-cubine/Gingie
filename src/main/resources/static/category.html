@@ -49,12 +49,51 @@
             align-items: center;
             gap: 20px;
             margin-right: 50px;
+            position: relative; /* Ensure dropdown is relative to this container */
         }
 
-        .header-icons img {
-            width: 40px;
-            height: 40px;
+        .header-icons button {
+            background-color: #f79c42;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
             cursor: pointer;
+            font-size: 1em;
+            color: white;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background-color: #e88a3a;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%; /* Align dropdown below the button */
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+
+        .dropdown a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1em;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #f2f2f2;
         }
 
         .content {
@@ -73,11 +112,10 @@
             margin-bottom: 20px;
         }
 
-
         .button-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 20px; /* Increased for better spacing */
+            gap: 20px;
             max-width: 1000px;
             width: 100%;
         }
@@ -94,11 +132,8 @@
             transition: background-color 0.3s;
             border-radius: 5px;
             box-sizing: border-box;
-            width: 100%; /* Ensures buttons stretch evenly in grid cells */
-            height: 50px; /* Consistent height for all buttons */
-        }
-        .button:hover {
-            background-color: #e88a3a;
+            width: 100%;
+            height: 50px;
         }
 
         .footer {
@@ -113,7 +148,6 @@
 <body>
 
 <div class="header">
-
     <div class="logo">
         <img src="./images/Gingie_icon.png" alt="Logo" title="Logo">
     </div>
@@ -124,7 +158,12 @@
 
     <div class="header-icons">
         <button class="button">⭐</button>
-        <button class="button">👤</button>
+        <button class="button" onclick="toggleDropdown()">👤</button>
+        <div class="dropdown" id="dropdownMenu">
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="userProfile.html">Profile</a>
+        </div>
     </div>
 </div>
 
@@ -132,33 +171,35 @@
     <div class="categories">Categories</div>
 
     <div class="button-grid">
-        <a href="/browse">
-            <button class="button">Breakfast</button>
-        </a>
-        <a href="/browse">
-            <button class="button">Lunch</button>
-        </a>
-        <a href="/browse">
-            <button class="button">Dinner</button>
-        </a>
-        <a href="/browse">
-            <button class="button">Dessert</button>
-        </a>
-        <a href="/browse">
-            <button class="button">Snacks</button>
-        </a>
-        <a href="/browse">
-            <button class="button">Drinks</button>
-        </a>
-        <a href="/browse">
-            <button class="button">All</button>
-        </a>
+        <a href="/browse"><button class="button">Breakfast</button></a>
+        <a href="/browse"><button class="button">Lunch</button></a>
+        <a href="/browse"><button class="button">Dinner</button></a>
+        <a href="/browse"><button class="button">Dessert</button></a>
+        <a href="/browse"><button class="button">Snacks</button></a>
+        <a href="/browse"><button class="button">Drinks</button></a>
+        <a href="/browse"><button class="button">All</button></a>
     </div>
 </div>
 
 <div class="footer">
     &copy; 2024 Your Company. All rights reserved.
 </div>
+
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdownMenu');
+        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.closest('.header-icons')) {
+            const dropdown = document.getElementById('dropdownMenu');
+            if (dropdown.style.display === 'flex') {
+                dropdown.style.display = 'none';
+            }
+        }
+    };
+</script>
 
 </body>
 </html>

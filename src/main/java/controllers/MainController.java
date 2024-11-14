@@ -20,7 +20,7 @@ public class MainController {
     @GetMapping("/category")
     public String category(Model model) {
         System.out.println("Category");
-        return "category";
+        return "category.html";
     }
 
     //Keeping this for when we use specific IDs to see the recipe page
@@ -28,7 +28,7 @@ public class MainController {
     public String recipe(@PathVariable("id") Long recipeID, Model model) {
         List<RecipeModel> recipes = recipeService.getRecipe();
         model.addAttribute("recipes", recipes);
-        return "recipe";
+        return "recipe.html";
     }
 
     @GetMapping("/browse")
