@@ -155,11 +155,11 @@
         }
     </style>
 </head>
-<body>
+<body onload="loadCards()">
 <div class="container">
     <header class="header">
         <div class="logo">
-            <img src="/images/Gingie_icon.png" alt="Logo" title="Logo">
+            <a href="../index.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
         </div>
 
         <div class="search-bar">
@@ -167,7 +167,7 @@
         </div>
 
         <div class="header-icons">
-            <button class="button">⭐</button>
+            <a href="../static/favorites.html"><button class="button">⭐</button></a>
             <button class="button" onclick="toggleDropdown()">👤</button>
             <div class="dropdown" id="dropdownMenu">
                 <a href="login.html">Login</a>
@@ -182,70 +182,7 @@
             <button>Recipe detail</button>
         </a>
         <div class="cards">
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div>
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div>
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div>
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div>
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div>
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div>
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div>
-            <div class="card">
-                <img src="placeholder.jpg" alt="[PICTURE]">
-                <div class="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br>
-                    [CATEGORY]
-                </div>
-            </div><!-- Additional Cards -->
+        <!-- function loadCards() will add the cards -->
         </div>
     </main>
 </div>
@@ -253,17 +190,32 @@
 <script>
     function toggleDropdown() {
         const dropdown = document.getElementById('dropdownMenu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
     }
 
     window.onclick = function(event) {
         if (!event.target.closest('.header-icons')) {
             const dropdown = document.getElementById('dropdownMenu');
-            if (dropdown.style.display === 'block') {
+            if (dropdown.style.display === 'flex') {
                 dropdown.style.display = 'none';
             }
         }
     };
+
+    function loadCards() {
+        for (let i = 0; i < 5; i++) {
+            const cards = document.querySelector(".cards");
+            cards.innerHTML += `
+            <div className="card">
+                <img src="placeholder.jpg" alt="[PICTURE]"/>
+                <div className="card-info">
+                    <strong>[DISH NAME]</strong>
+                    [RATING] <br/>
+                    [CATEGORY]
+                </div>
+            </div>`;
+        }
+    }
 </script>
 </body>
 </html>

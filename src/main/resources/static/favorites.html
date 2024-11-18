@@ -3,20 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Favorites</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #d3d3d3;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 8000px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: visible;
         }
 
         .header {
-            background-color: #f79c42;
-            padding: 15px;
+            background-color: #ff8c42;
             display: flex;
+            padding: 15px;
             justify-content: space-between;
             align-items: center;
         }
@@ -49,21 +58,20 @@
             align-items: center;
             gap: 20px;
             margin-right: 50px;
-            position: relative; /* Ensure dropdown is relative to this container */
+            position: relative;
         }
 
         .header-icons button {
-            background-color: #f79c42;
+            background-color: #ff8c42;
             border: none;
-            border-radius: 5px;
             padding: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.5em;
             color: white;
-            font-weight: bold;
         }
 
-        .button:hover {
+        .header-icons button:hover {
             background-color: #e88a3a;
         }
 
@@ -77,6 +85,7 @@
             flex-direction: column;
             border-radius: 5px;
             z-index: 1000;
+            width: 150px;
         }
 
         .dropdown a {
@@ -96,93 +105,83 @@
             background-color: #f2f2f2;
         }
 
-        .content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        main {
             padding: 20px;
         }
 
-        .categories {
-            font-size: 1.5em;
+        .favorites {
+            background-color: #ff8c42;
+            color: white;
             font-weight: bold;
-            color: #333;
+            padding: 10px;
             margin-bottom: 20px;
+            display: inline-block;
+            border-radius: 4px;
         }
 
-        .button-grid {
+        .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            max-width: 1000px;
-            width: 100%;
         }
 
-        .button {
-            background-color: #f79c42;
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 15px;
             text-align: center;
-            font-size: 1em;
-            color: white;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            border-radius: 5px;
-            box-sizing: border-box;
-            width: 100%;
-            height: 50px;
+            border: 1px solid #ddd;
         }
 
-        .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 0.9em;
+        .card img {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+            object-fit: cover;
+            background-color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .card-info {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .card-info strong {
+            display: block;
+            margin-top: 5px;
+            color: #333;
         }
     </style>
 </head>
-<body>
-
-<div class="header">
-    <div class="logo">
-        <a href="../index.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
-    </div>
-
-    <div class="search-bar">
-        <input type="text" placeholder="Search...">
-    </div>
-
-    <div class="header-icons">
-        <a href="favorites.html"><button class="button">⭐</button></a>
-        <button class="button" onclick="toggleDropdown()">👤</button>
-        <div class="dropdown" id="dropdownMenu">
-            <a href="login.html">Login</a>
-            <a href="register.html">Register</a>
-            <a href="userProfile.html">Profile</a>
+<body onload="loadCards()">
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <a href="index.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
         </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="header-icons">
+            <a href="favorites.html"><button class="button">⭐</button></a>
+            <button class="button" onclick="toggleDropdown()">👤</button>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+                <a href="userProfile.html">Profile</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="favorites">Favorites</div>
+    <div class="cards">
+        <!-- function loadCards() will add the cards -->
     </div>
-</div>
-
-<div class="content">
-    <div class="categories">Categories</div>
-
-    <div class="button-grid">
-        <a href="/browse"><button class="button">Breakfast</button></a>
-        <a href="/browse"><button class="button">Lunch</button></a>
-        <a href="/browse"><button class="button">Dinner</button></a>
-        <a href="/browse"><button class="button">Dessert</button></a>
-        <a href="/browse"><button class="button">Snacks</button></a>
-        <a href="/browse"><button class="button">Drinks</button></a>
-        <a href="/browse"><button class="button">All</button></a>
-    </div>
-</div>
-
-<div class="footer">
-    &copy; 2024 Your Company. All rights reserved.
+    </main>
 </div>
 
 <script>
@@ -199,7 +198,21 @@
             }
         }
     };
-</script>
 
+    function loadCards() {
+        for (let i = 0; i < 5; i++) {
+            const cards = document.querySelector(".cards");
+            cards.innerHTML += `
+            <div className="card">
+                <img src="placeholder.jpg" alt="[PICTURE]"/>
+                <div className="card-info">
+                    <strong>[DISH NAME]</strong>
+                    [RATING] <br/>
+                    [CATEGORY]
+                </div>
+            </div>`;
+        }
+    }
+</script>
 </body>
 </html>
