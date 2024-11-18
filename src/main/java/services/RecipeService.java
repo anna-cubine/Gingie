@@ -4,6 +4,7 @@ import models.RecipeModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import repositories.RecipeRepository;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class RecipeService {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public RecipeService(JdbcTemplate jdbcTemplate) {
+    public RecipeService(JdbcTemplate jdbcTemplate, RecipeRepository recipeRepository) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -32,6 +33,7 @@ public class RecipeService {
                 rs.getInt("categoryID"),
                 rs.getDouble("averageRating")));
     }
+
 
 
 

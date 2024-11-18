@@ -2,9 +2,276 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Recipe</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d3d3d3;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 8000px;
+            margin: 0 auto;
+            background-color: #f5f5f5;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: visible;
+        }
+
+        .header {
+            background-color: #ff8c42;
+            display: flex;
+            padding: 8px; /* Reduced padding */
+            justify-content: space-between;
+            align-items: center;
+            height: 60px; /* Set height for consistency */
+        }
+
+        .header .logo img {
+            width: 50px; /* Smaller logo size */
+            height: 50px;
+        }
+
+        .header .search-bar input[type="text"] {
+            padding: 8px; /* Smaller padding */
+            width: 500px; /* Adjusted for smaller header */
+            font-size: 0.9em; /* Smaller text */
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Reduced gap for compact layout */
+            margin-right: 20px; /* Adjusted right margin */
+            position: relative;
+        }
+
+        .header-icons button {
+            background-color: #ff8c42;
+            border: none;
+            padding: 5px; /* Smaller padding */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em; /* Adjusted icon size */
+            color: white;
+        }
+
+        .header-icons button:hover {
+            background-color: #e88a3a;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%; /* Align dropdown below the button */
+            right: 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: none; /* Initially hidden */
+            flex-direction: column;
+            border-radius: 5px;
+            z-index: 1000;
+            width: 150px;
+        }
+
+        .dropdown a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1em;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #f2f2f2;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .dishContainer h2 {
+            position: absolute;
+            bottom: 30px;
+            left: 3px;
+            font-size: large;
+        }
+
+        .dishContainer h3 {
+            position: absolute;
+            bottom: 0;
+            left: 3px;
+        }
+        .ingredient-item,
+        .instruction-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .ingredient-item input,
+        .instruction-item textarea {
+            flex: 1;
+            padding: 8px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .add-button {
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-button:hover {
+            background-color: #218838;
+        }
+
+        .remove-button {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .remove-button:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <img src="/images/Gingie_icon.png" alt="Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+        </div>
+        <div class="header-icons">
+            <button class="favorite-button">★</button>
+            <button class="button" onclick="toggleDropdown()">👤</button>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+                <a href="userProfile.html">Profile</a>
+            </div>
+        </div>
+    </header>
+</div>
+<div class="dishContainer">
+    <form th:action="@{/addRecipe}" th:object="${recipe}" method="post" enctype="multipart/form-data">
+        <div class="form-section">
+            <label for="dishName">Dish Name:</label>
+            <input type="text" id="dishName" name="dishName" th:field="*{dishName}" required>
+        </div>
 
+        <div class="form-section">
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" accept="image/png, image/jpeg">
+        </div>
+
+        <div class="form-section">
+            <label for="category">Category</label>
+            <select id="category" class="categoryID" required>
+                <option value="1">Breakfast</option>
+                <option value="2">Lunch</option>
+                <option value="3">Dinner</option>
+                <option value="4">Deserts</option>
+                <option value="5">Snacks</option>
+                <option value="6">Drinks</option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <label for="ingredients-container">Ingredients:</label>
+            <div id="ingredients-container">
+                <!-- Placeholder for dynamically added fields -->
+                <div class="ingredient-item">
+                    <input type="text" name="ingredients" placeholder="Enter an ingredient" required>
+                    <button type="button" class="remove-button" onclick="removeField(this)">Remove Ingredient</button>
+                </div>
+            </div>
+            <button type="button" class="add-button" onclick="addIngredient()">Add Ingredient</button>
+        </div>
+
+        <div class="form-section">
+            <label for="instructions-container">Instructions:</label>
+            <div id="instructions-container">
+                <!-- Placeholder for dynamically added fields -->
+                <div class="instruction-item">
+                    <textarea name="instructions" rows="3" placeholder="Enter an instruction" required></textarea>
+                    <button type="button" class="remove-button" onclick="removeField(this)">Remove</button>
+                </div>
+            </div>
+            <button type="button" class="add-button" onclick="addInstruction()">Add Instruction</button>
+
+        <button type="submit">Submit Recipe</button>
+    </form>
+    <script>
+        function addIngredient() {
+            const container = document.getElementById("ingredients-container");
+            const input = document.createElement("input");
+            input.className="ingredients-item";
+
+            input.innerHTML ="<input type=\"text\" name=\"ingredients\" placeholder=\"Enter an ingredient\" required>\n" +
+                "                    <button type=\"button\" class=\"remove-button\" onclick=\"removeField(this)\">Remove Ingredient</button>"
+
+            container.appendChild(input);
+        }
+
+        /**
+         *
+         */
+        function addInstruction() {
+            const container = document.getElementById("instructions-container");
+            const input = document.createElement("input");
+            input.className = "instructions-item";
+
+            input.innerHTML = "<textarea name=\"instructions\" rows=\"3\" placeholder=\"Enter an instruction\" required></textarea>\n" +
+                "                    <button type=\"button\" class=\"remove-button\" onclick=\"removeField(this)\">Remove</button>"
+            container.append(input);
+        }
+
+        /**
+         * Removing previous instruction or ingredient field.
+         * @param button Button that was pressed, remove button
+         */
+        function removeField(button){
+            button.parentElement.remove();
+        }
+    </script>
+</div>
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdownMenu');
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.closest('.header-icons')) {
+            const dropdown = document.getElementById('dropdownMenu');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+            }
+        }
+    };
+</script>
 </body>
 </html>
