@@ -16,13 +16,28 @@ public class RecipeRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    /**
+     * Adding recipe to database using SQL query and jdbcTemplate
+     * @param recipe Taking in a recipe model to add to database
+     */
     public void saveRecipe(RecipeModel recipe) {
-        String query = "INSERT INTO gingie (recipeID, name, ingredients, instructions, categoryID, averageRating) VALUES (?,?,?,?,?,?) ";
-        jdbcTemplate.update(query, recipe.getRecipeID(), recipe.getDishName(), recipe.getIngredients(), recipe.getInstructions(), recipe.getCategoryID(), recipe.getAverageRating());
+        String query = "INSERT INTO Recipes (recipeID, name, ingredients, instructions, category, user_username, averageRating) VALUES (?,?,?,?,?,?,?) ";
+        jdbcTemplate.update(query,
+                recipe.getRecipeID(),
+                recipe.getDishName(),
+                String.join("\n",recipe.getIngredients()),
+                String.join("\n",recipe.getInstructions()),
+                5,
+                "test",
+                0);
     }
 
+    /**
+     * Getting all recipes from the database using SQL query and jdbcTemplate
+     * @return The query along with mapped recipe model.
+     */
     public List<RecipeModel> getAllRecipes() {
-        String query = "SELECT * FROM gingie ";
+        String query = "SELECT * FROM Recipes ";
         return jdbcTemplate.query(query, recipeMapper());
     }
 

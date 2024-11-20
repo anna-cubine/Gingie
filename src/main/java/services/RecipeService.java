@@ -10,28 +10,24 @@ import java.util.List;
 
 @Repository
 public class RecipeService {
-    private final JdbcTemplate jdbcTemplate;
+    private final RecipeRepository recipeRepository;
 
-    @Autowired
-    public RecipeService(JdbcTemplate jdbcTemplate, RecipeRepository recipeRepository) {
-        this.jdbcTemplate = jdbcTemplate;
+    //@Autowired
+    public RecipeService( RecipeRepository recipeRepository) {
+        this.recipeRepository = recipeRepository;
+    }
+
+    public List<RecipeModel> getAllRecipes() {
+        return recipeRepository.getAllRecipes();
     }
 
     /**
-     * Getting data from the database for the recipes. Using jdbcTemplate
-     * and a sql query to bring into java
-     * @return RecipeModel data
+     * Saving recipe from the view and main controller down to the repository
+     * where it will be stored in the database
+     * @param recipeModel Taking the populated recipe model
      */
-    public List<RecipeModel> getRecipe() {
-        String sql = "SELECT * FROM Recipes";
-
-        return jdbcTemplate.query(sql, (rs, _) -> new RecipeModel(
-                rs.getInt("recipeID"),
-                rs.getString("name"),
-                rs.getString("ingredients"),
-                rs.getString("instructions"),
-                rs.getInt("categoryID"),
-                rs.getDouble("averageRating")));
+    public void saveRecipe(RecipeModel recipeModel) {
+        recipeRepository.saveRecipe(recipeModel);
     }
 
 

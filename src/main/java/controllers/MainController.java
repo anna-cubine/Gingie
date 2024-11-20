@@ -17,11 +17,9 @@ import java.util.List;
 public class MainController {
     private final RecipeService recipeService;
     private static int recipeCounter = 0;
-    private final RecipeRepository recipeRepository;
 
-    public MainController(RecipeService recipeService, RecipeRepository recipeRepository) {
+    public MainController(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.recipeRepository = recipeRepository;
     }
 
     @GetMapping("/category")
@@ -29,20 +27,32 @@ public class MainController {
         System.out.println("Category");
         return "category.html";
     }
-
+    /*
     //Keeping this for when we use specific IDs to see the recipe page
     @GetMapping("/recipe{id}")
     public String recipe(@PathVariable("id") Long recipeID, Model model) {
         List<RecipeModel> recipes = recipeService.getRecipe();
         model.addAttribute("recipes", recipes);
         return "recipe.html";
-    }
+    }*/
 
+    /**
+     * Add recipe page using spring boot mapping
+     * @param model Gets a model to add recipe model to
+     * @return Returns the path of where the user is being taken
+     */
     @GetMapping("/addRecipe")
     public String addRecipe(Model model) {
         model.addAttribute("recipe", new RecipeModel());
         return "addRecipe";
     }
+    /*
+    @GetMapping
+    public String getAllRecipes(Model model) {
+        List<RecipeModel> recipes = recipeService.getAllRecipes();
+        model.addAttribute("recipes", recipes);
+        return "recipe.html";
+    }*/
 
     /*
     @PostMapping("/addRecipe")
@@ -78,10 +88,29 @@ public class MainController {
         return "redirect:/browse";
     }*/
 
+    /**
+     * Post mapping for the recipe. This is used to save the recipe, moving through the layers closer to
+     * the database
+     * @param recipe Taking the populated recipe model data given from the user in the forms
+     * @return Redirecting the user to the browse page
+     */
     @PostMapping("/addRecipe")
-    public String addRecipe(@ModelAttribute RecipeModel recipe, RedirectAttributes redirectAttributes) {
-        recipeRepository.saveRecipe(recipe);
-        redirectAttributes.addFlashAttribute("successMessage", "Recipe added successfully");
+    public String addRecipe(@ModelAttribute RecipeModel recipe) {
+        recipeService.saveRecipe(recipe);
+        //Image upload handling
+        /*
+        String imagePath = null;
+        if (image != null && !image.isEmpty()) {
+            try{
+                //Save image to images folder
+                String uploadPath = "images";
+                File file = new File(uploadPath + image.getOriginalFilename());
+                image.transferTo(file);
+                imagePath = file.getAbsolutePath();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }*/
         return "redirect:/browse";
     }
 
