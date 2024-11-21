@@ -27,7 +27,7 @@ public class RecipeRepository {
                 recipe.getDishName(),
                 String.join("\n",recipe.getIngredients()),
                 String.join("\n",recipe.getInstructions()),
-                5,
+                recipe.getCategoryID(),
                 "test",
                 0);
     }
