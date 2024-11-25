@@ -170,8 +170,8 @@
             <a href="/favorites"><button class="button">⭐</button></a>
             <button class="button" onclick="toggleDropdown()">👤</button>
             <div class="dropdown" id="dropdownMenu">
-                <a href="login.html">Login</a>
-                <a href="register.html">Register</a>
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
                 <a href="userProfile.html">Profile</a>
             </div>
         </div>
@@ -263,13 +263,13 @@
 <script>
     function toggleDropdown() {
         const dropdown = document.getElementById('dropdownMenu');
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
     }
 
     window.onclick = function(event) {
         if (!event.target.closest('.header-icons')) {
             const dropdown = document.getElementById('dropdownMenu');
-            if (dropdown.style.display === 'block') {
+            if (dropdown.style.display === 'flex') {
                 dropdown.style.display = 'none';
             }
         }

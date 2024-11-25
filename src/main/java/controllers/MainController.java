@@ -21,7 +21,6 @@ public class MainController {
 
     @GetMapping("/category")
     public String category(Model model) {
-        System.out.println("Category");
         return "category.html";
     }
     /*
