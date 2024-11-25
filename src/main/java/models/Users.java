@@ -6,6 +6,7 @@ public class Users {
     private String password;
     private String email;
 
+    public Users(){}
     /**
      * Constructor for the User class
      * @param userID Unique ID for every user

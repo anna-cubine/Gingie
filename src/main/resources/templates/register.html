@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Register Page</title>
     <style>
         body {
             font-family: sans-serif;
@@ -28,7 +28,7 @@
         }
 
         input[type="text"],
-        input[type="password"] {
+        input[type="password"], input[type="email"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -65,18 +65,19 @@
 </head>
 <body>
 <div class="container">
-    <h2>Login</h2>
-    <form>
+    <h2>Register</h2>
+    <form th:action="@{/register}" th:object="${user}">
+        <label>Email</label>
+        <input type="email" name="email" th:field="*{email}">
+
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <input type="text" id="username" name="username" th:field="*{username}" required>
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" id="password" name="password" th:field="*{password}" required>
 
-        <button type="submit">Login</button>
+        <button type="submit">register</button>
     </form>
-
-    <a href="register.html" class="register"><button>New User?</button></a>
 </div>
 </body>
 </html>

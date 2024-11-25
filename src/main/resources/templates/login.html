@@ -28,7 +28,7 @@
         }
 
         input[type="text"],
-        input[type="password"], input[type="email"] {
+        input[type="password"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -65,19 +65,18 @@
 </head>
 <body>
 <div class="container">
-    <h2>Register</h2>
+    <h2>Login</h2>
     <form>
-        <label>Email</label>
-        <input type="email" name="email">
-
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>
 
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">register</button>
+        <button type="submit">Login</button>
     </form>
+
+    <a href="/register" class="register"><button>New User?</button></a>
 </div>
 </body>
 </html>
