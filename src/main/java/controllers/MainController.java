@@ -91,7 +91,6 @@ public class MainController {
         model.addAttribute("user", new Users());
         return "register";
     }
-
     /**
      * Post mapping for the recipe. This is used to save the recipe, moving through the layers closer to
      * the database

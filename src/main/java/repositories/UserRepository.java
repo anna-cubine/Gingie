@@ -21,7 +21,7 @@ public class UserRepository {
      * @param user Taking in a Users model to add to database
      */
     public void addUser(Users user) {
-        String query = "INSERT INTO Users (userID, username, password, email) VALUES (?,?,?,?) ";
+        String query = "INSERT INTO Users (userID, username, password, email) VALUES (?,?,?,?)";
         jdbcTemplate.update(query,
                 user.getUserID(),
                 user.getUsername(),
