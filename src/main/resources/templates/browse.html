@@ -125,20 +125,13 @@
             gap: 20px;
         }
 
-        .card-button {
+        .card {
             background-color: white;
-            border: none;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 0;
+            padding: 15px;
             text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ddd;
         }
 
         .card img {
@@ -148,13 +141,11 @@
             object-fit: cover;
             background-color: #ccc;
             margin-bottom: 10px;
-            border-radius: 8px 8px 0 0;
         }
 
         .card-info {
             font-size: 0.9rem;
             color: #555;
-            padding: 10px;
         }
 
         .card-info strong {
@@ -188,10 +179,15 @@
     <main>
         <div class="categories">Categories</div>
         <a href="/addRecipe">
-            <button>Add Recipe</button>
+            <button>Recipe detail</button>
         </a>
         <div class="cards">
-            <!-- function loadCards() will add the cards -->
+            <div className="card">
+                <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
+                <div className="card-info">
+                    <!--Functionality to be added-->
+                </div>
+            </div>
         </div>
     </main>
 </div>
@@ -210,22 +206,20 @@
             }
         }
     };
-
+    /*
     function loadCards() {
         for (let i = 0; i < 5; i++) {
-            const cards = document.querySelector('.cards');
+            const cards = document.querySelector(".cards");
             cards.innerHTML += `
-            <button class="card-button">
-                <div class="card">
-                    <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
-                    <div class="card-info">
-                        <strong>[dishName]</strong>
-                        [averageRating] <br/>
-                        [categoryID]
-                    </div>
+            <div className="card">
+                <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
+                <div className="card-info">
+                    <strong class="dishName" th:text="${recipes.dishName}"></strong>
+                    <p class="rating" th:text="${recipes.averageRating}"></p> <br/>
+                    <p class="category" th:text="${recipes.categoryID}"></p>
                 </div>
-            </button>`;
-        }
+            </div>`;
+        }*/
     }
 </script>
 </body>

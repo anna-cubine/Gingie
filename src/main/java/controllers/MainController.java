@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import services.RecipeService;
 import services.UserService;
 
+import java.util.List;
+
 @Controller
 public class MainController {
     private final RecipeService recipeService;
@@ -21,16 +23,15 @@ public class MainController {
 
     @GetMapping("/category")
     public String category(Model model) {
-        return "category.html";
+        return "category";
     }
-    /*
-    //Keeping this for when we use specific IDs to see the recipe page
+
     @GetMapping("/recipe{id}")
-    public String recipe(@PathVariable("id") Long recipeID, Model model) {
-        List<RecipeModel> recipes = recipeService.getRecipe();
-        model.addAttribute("recipes", recipes);
-        return "recipe.html";
-    }*/
+    public String recipe(@PathVariable("id") int recipeID, Model model) {
+        RecipeModel recipe = recipeService.getRecipeById(recipeID);
+        model.addAttribute("recipe", recipe);
+        return "recipe";
+    }
 
     /**
      * Add recipe page using spring boot mapping
@@ -98,7 +99,9 @@ public class MainController {
      */
     @PostMapping("/register")
     public String register(@ModelAttribute Users user) {
+        System.out.println("Before");
         userService.addUser(user);
+        System.out.println("After");
         return "redirect:/login";
     }
 
@@ -113,12 +116,14 @@ public class MainController {
     }
 
     @GetMapping("/browse")
-    public String browse() {
+    public String browse(Model model) {
+        List<RecipeModel> recipes = recipeService.getAllRecipes();
+        model.addAttribute("recipes", recipes);
         return "browse";
     }
-
+    /*
     @GetMapping("/recipe")
     public String recipe(Model model) {
         return "recipe";
-    }
+    }*/
 }

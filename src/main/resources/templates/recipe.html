@@ -155,14 +155,14 @@
     </header>
 </div>
 <div class="dishContainer">
-    <h2 class="dishName">Dish name</h2>
-    <h3 class="dishRating">Rating</h3>
+    <h2 class="dishName" th:text="${recipe.dishName}">Dish name</h2>
+    <h3 class="dishRating" th:text="${recipe.averageRating}">Rating</h3>
 </div>
 <div class="row">
-    <div class="ingredients">
+    <div class="ingredients" th:text="${recipe.ingredients}">
         <h1>Ingredients</h1>
     </div>
-    <div class="instructions">
+    <div class="instructions" th:text="${recipe.instructions}">
         <h1>Instructions</h1>
     </div>
     <div class="comments">

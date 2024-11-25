@@ -18,6 +18,10 @@ public class RecipeService {
         return recipeRepository.getAllRecipes();
     }
 
+    public RecipeModel getRecipeById(int id) {
+        return recipeRepository.getRecipeById(id);
+    }
+
     /**
      * Saving recipe from the view and main controller down to the repository
      * where it will be stored in the database

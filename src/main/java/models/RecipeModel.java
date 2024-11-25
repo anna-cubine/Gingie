@@ -8,14 +8,14 @@ public class RecipeModel {
     private String dishName;
     private List<String> ingredients;
     private List<String> instructions;
-    private int categoryID;
+    private String categoryID;
     private double averageRating;
 
     //No argument constructor for form binding
     public RecipeModel() {
     }
 
-    public RecipeModel(int recipeID, String dishName, String ingredients, String instructions, int categoryID, double averageRating){
+    public RecipeModel(int recipeID, String dishName, String ingredients, String instructions, String categoryID, double averageRating){
         this.recipeID = recipeID;
         this.dishName = dishName;
         this.ingredients = stringToList(ingredients);
@@ -57,13 +57,13 @@ public class RecipeModel {
     public String getDishName() {return dishName;}
     public List<String> getIngredients() {return ingredients;}
     public List<String> getInstructions() {return instructions;}
-    public int getCategoryID() {return categoryID;}
+    public String getCategoryID() {return categoryID;}
     public double getAverageRating() {return averageRating;}
 
     public void setRecipeID(int recipeID) {this.recipeID = recipeID;}
     public void setDishName(String dishName) {this.dishName = dishName;}
     public void setIngredients(List<String> ingredients) {this.ingredients = ingredients;}
     public void setInstructions(List<String> instructions) {this.instructions = instructions;}
-    public void setCategoryID(int categoryID) {this.categoryID = categoryID;}
+    public void setCategoryID(String categoryID) {this.categoryID = categoryID;}
     public void setAverageRating(double averageRating) {this.averageRating = averageRating;}
 }

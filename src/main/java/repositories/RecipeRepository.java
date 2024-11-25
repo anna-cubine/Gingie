@@ -41,13 +41,18 @@ public class RecipeRepository {
         return jdbcTemplate.query(query, recipeMapper());
     }
 
+    public RecipeModel getRecipeById(int id) {
+        String query = "SELECT * FROM Recipes WHERE recipeID = ?";
+        return jdbcTemplate.queryForObject(query, recipeMapper(), id);
+    }
+
     public RowMapper<RecipeModel> recipeMapper() {
         return (rs, rowNum) -> new RecipeModel(
                 rs.getInt("recipeID"),
                 rs.getString("name"),
                 rs.getString("ingredients"),
                 rs.getString("instructions"),
-                rs.getInt("categoryID"),
+                rs.getString("categoryID"),
                 rs.getDouble("averageRating")
         );
     }

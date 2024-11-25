@@ -66,7 +66,7 @@
 <body>
 <div class="container">
     <h2>Register</h2>
-    <form th:action="@{/register}" th:object="${user}">
+    <form th:action="@{/register}" th:object="${user}" method="post" enctype="multipart/form-data">
         <label>Email</label>
         <input type="email" name="email" th:field="*{email}">
 
