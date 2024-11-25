@@ -125,13 +125,20 @@
             gap: 20px;
         }
 
-        .card {
+        .card-button {
             background-color: white;
+            border: none;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 15px;
+            padding: 0;
             text-align: center;
-            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .card img {
@@ -141,11 +148,13 @@
             object-fit: cover;
             background-color: #ccc;
             margin-bottom: 10px;
+            border-radius: 8px 8px 0 0;
         }
 
         .card-info {
             font-size: 0.9rem;
             color: #555;
+            padding: 10px;
         }
 
         .card-info strong {
@@ -179,10 +188,10 @@
     <main>
         <div class="categories">Categories</div>
         <a href="/addRecipe">
-            <button>Recipe detail</button>
+            <button>Add Recipe</button>
         </a>
         <div class="cards">
-        <!-- function loadCards() will add the cards -->
+            <!-- function loadCards() will add the cards -->
         </div>
     </main>
 </div>
@@ -204,16 +213,18 @@
 
     function loadCards() {
         for (let i = 0; i < 5; i++) {
-            const cards = document.querySelector(".cards");
+            const cards = document.querySelector('.cards');
             cards.innerHTML += `
-            <div className="card">
-                <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
-                <div className="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br/>
-                    [CATEGORY]
+            <button class="card-button">
+                <div class="card">
+                    <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
+                    <div class="card-info">
+                        <strong>[dishName]</strong>
+                        [averageRating] <br/>
+                        [categoryID]
+                    </div>
                 </div>
-            </div>`;
+            </button>`;
         }
     }
 </script>

@@ -159,7 +159,7 @@
 <div class="container">
     <header class="header">
         <div class="logo">
-            <a href="/category"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
+            <a href="../index.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
         </div>
 
         <div class="search-bar">
@@ -199,18 +199,33 @@
         }
     };
 
-    function loadCards() {
-        for (let i = 0; i < 5; i++) {
-            const cards = document.querySelector(".cards");
-            cards.innerHTML += `
-            <div className="card">
-                <img src="placeholder.jpg" alt="[PICTURE]"/>
-                <div className="card-info">
-                    <strong>[DISH NAME]</strong>
-                    [RATING] <br/>
-                    [CATEGORY]
-                </div>
-            </div>`;
+    async function loadCards() {
+        try {
+            // Fetch recipe data from the backend
+            const response = await fetch('/api/recipes'); // Replace with your actual API endpoint
+            const recipes = await response.json();
+
+            // Select the cards container
+            const cards = document.querySelector('.cards');
+
+            // Loop through recipes and create HTML for each card
+            recipes.forEach(recipe => {
+                cards.innerHTML += `
+                <button class="card-button">
+                    <div class="card">
+                        <img src="${recipe.imageUrl}" alt="${recipe.name}" />
+                        <div class="card-info">
+                            <strong>${recipe.name}</strong>
+                            ${recipe.rating} ★ <br/>
+                            ${recipe.category}
+                        </div>
+                    </div>
+                </button>`;
+            });
+        } catch (error) {
+            console.error("Error loading cards:", error);
+            const cards = document.querySelector('.cards');
+            cards.innerHTML = "<p>Failed to load recipes. Please try again later.</p>";
         }
     }
 </script>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import services.RecipeService;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -37,6 +38,7 @@ public class MainController {
     @GetMapping("/addRecipe")
     public String addRecipe(Model model) {
         model.addAttribute("recipe", new RecipeModel());
+        //model.addAllAttributes (recipeService.getAllRecipes());
         return "addRecipe";
     }
     /*
@@ -83,7 +85,9 @@ public class MainController {
     }
 
     @GetMapping("/browse")
-    public String browse() {
+    public String browse(Model model) {
+        //List<models.RecipeModel> recipes = recipeService.getAllRecipes();
+        //model.addAttribute("recipes", new models.RecipeModel () );
         return "browse";
     }
 

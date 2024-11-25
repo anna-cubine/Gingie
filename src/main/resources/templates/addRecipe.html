@@ -159,13 +159,15 @@
 <div class="container">
     <header class="header">
         <div class="logo">
-            <img src="/images/Gingie_icon.png" alt="Logo">
+            <a href="../index.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
         </div>
+
         <div class="search-bar">
-            <input type="text" placeholder="Search">
+            <input type="text" placeholder="Search...">
         </div>
+
         <div class="header-icons">
-            <button class="favorite-button">★</button>
+            <a href="/favorites"><button class="button">⭐</button></a>
             <button class="button" onclick="toggleDropdown()">👤</button>
             <div class="dropdown" id="dropdownMenu">
                 <a href="login.html">Login</a>
@@ -223,7 +225,7 @@
             <button type="button" class="add-button" onclick="addInstruction()">Add Instruction</button>
 
         <button type="submit">Submit Recipe</button>
-    </form>
+     </form>
     <script>
         function addIngredient() {
             const container = document.getElementById("ingredients-container");
