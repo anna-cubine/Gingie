@@ -119,13 +119,13 @@
             border-radius: 4px;
         }
 
-        .cards {
+        .card-button {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
         }
 
-        .card {
+        .card-button-hover {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -156,10 +156,10 @@
     </style>
 </head>
 <body onload="loadCards()">
-<div class="container">
+<button class="container">
     <header class="header">
         <div class="logo">
-            <a href="category.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
+            <a href="../static/category.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
         </div>
 
         <div class="search-bar">
@@ -181,16 +181,19 @@
         <a href="/addRecipe">
             <button>Recipe detail</button>
         </a>
-        <div class="cards">
-            <div className="card">
-                <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
-                <div className="card-info">
-                    <!--Functionality to be added-->
+        <button class="card-button" th:each="recipes : ${recipes}">
+                <div class="card">
+                    <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
+                    <div class="card-info">
+                        <strong class="dishName" th:text="${recipes.dishName}"></strong>
+                        <p class="rating" th:text="${recipes.averageRating}"></p> <br/>
+                        <p class="category" th:text="${recipes.categoryID}"></p>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </a>
+        </button>
     </main>
-</div>
+</button>
 
 <script>
     function toggleDropdown() {

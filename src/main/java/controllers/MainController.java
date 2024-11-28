@@ -26,9 +26,20 @@ public class MainController {
         return "category";
     }
 
-    @GetMapping("/recipe{id}")
-    public String recipe(@PathVariable("id") int recipeID, Model model) {
+    /**
+     * Mapping for the recipe detail page. Get the recipe from the service then make
+     * sure to get the ingredients and instructions as lists to show in view
+     * @param recipeID ID for specific recipe
+     * @param model
+     * @return
+     */
+    @GetMapping("/recipe")
+    public String recipe(@RequestParam("id") int recipeID, Model model) {
         RecipeModel recipe = recipeService.getRecipeById(recipeID);
+        //Have to turn string from database back into list
+        //So I'll just grab it from the getter in the model
+        recipe.setIngredients(recipe.getIngredients());
+        recipe.setInstructions(recipe.getInstructions());
         model.addAttribute("recipe", recipe);
         return "recipe";
     }
@@ -99,9 +110,7 @@ public class MainController {
      */
     @PostMapping("/register")
     public String register(@ModelAttribute Users user) {
-        System.out.println("Before");
         userService.addUser(user);
-        System.out.println("After");
         return "redirect:/login";
     }
 

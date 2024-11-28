@@ -21,7 +21,7 @@ public class RecipeRepository {
      * @param recipe Taking in a recipe model to add to database
      */
     public void saveRecipe(RecipeModel recipe) {
-        String query = "INSERT INTO Recipes (recipeID, name, ingredients, instructions, category, user_username, averageRating) VALUES (?,?,?,?,?,?,?) ";
+        String query = "INSERT INTO Recipes (recipeID, name, ingredients, instructions, categoryID, user_username, averageRating) VALUES (?,?,?,?,?,?,?) ";
         jdbcTemplate.update(query,
                 recipe.getRecipeID(),
                 recipe.getDishName(),

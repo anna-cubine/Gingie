@@ -149,7 +149,7 @@
             <div class="dropdown" id="dropdownMenu">
                 <a href="login.html">Login</a>
                 <a href="register.html">Register</a>
-                <a href="userProfile.html">Profile</a>
+                <a href="../static/userProfile.html">Profile</a>
             </div>
         </div>
     </header>
@@ -159,11 +159,19 @@
     <h3 class="dishRating" th:text="${recipe.averageRating}">Rating</h3>
 </div>
 <div class="row">
-    <div class="ingredients" th:text="${recipe.ingredients}">
+    <div>
         <h1>Ingredients</h1>
+        <ul class="ingredients">
+            <!--Bulleted list of ingredients-->
+            <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}">Ingredients Not Found</li>
+        </ul>
     </div>
-    <div class="instructions" th:text="${recipe.instructions}">
+    <div>
         <h1>Instructions</h1>
+        <ul class="instructions">
+            <!--Bulleted (Maybe try to add numbers using stat.count) list of instructions-->
+            <li th:each="instruction, stat : ${recipe.instructions}" th:text="${instruction}">Instructions Not Found</li>
+        </ul>
     </div>
     <div class="comments">
         <h1>Comments</h1>

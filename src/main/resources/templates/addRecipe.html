@@ -206,7 +206,7 @@
             <div id="ingredients-container">
                 <!-- Placeholder for dynamically added fields -->
                 <div class="ingredient-item">
-                    <input type="text" name="ingredients" placeholder="Enter an ingredient" required>
+                    <input type="text" name="ingredients[0]" placeholder="Enter an ingredient" required>
                     <button type="button" class="remove-button" onclick="removeField(this)">Remove Ingredient</button>
                 </div>
             </div>
@@ -218,7 +218,7 @@
             <div id="instructions-container">
                 <!-- Placeholder for dynamically added fields -->
                 <div class="instruction-item">
-                    <textarea name="instructions" rows="3" placeholder="Enter an instruction" required></textarea>
+                    <textarea name="instructions[0]" rows="3" placeholder="Enter an instruction" required></textarea>
                     <button type="button" class="remove-button" onclick="removeField(this)">Remove</button>
                 </div>
             </div>
@@ -228,14 +228,17 @@
      </form>
     <script>
         function addIngredient() {
+            //Get the container
             const container = document.getElementById("ingredients-container");
-            const input = document.createElement("input");
-            input.className="ingredients-item";
+            //Get the index so I can keep track of the
+            const index = container.children.length;
+            const div = document.createElement("div");
+            div.className="ingredients-item";
+            //Using an index to keep track of how many times user added ingredient. Did the same for instruction
+            div.innerHTML =`<input type="text" name="ingredients[${index}]" placeholder="Enter an ingredient" required>
+                <button type="button" class="remove-button" onclick="removeField(this)">Remove Ingredient</button>`;
 
-            input.innerHTML ="<input type=\"text\" name=\"ingredients\" placeholder=\"Enter an ingredient\" required>\n" +
-                "                    <button type=\"button\" class=\"remove-button\" onclick=\"removeField(this)\">Remove Ingredient</button>"
-
-            container.appendChild(input);
+            container.appendChild(div);
         }
 
         /**
@@ -243,12 +246,13 @@
          */
         function addInstruction() {
             const container = document.getElementById("instructions-container");
-            const input = document.createElement("input");
-            input.className = "instructions-item";
+            const index = container.children.length;
+            const div = document.createElement("div");
+            div.className = "instructions-item";
 
-            input.innerHTML = "<textarea name=\"instructions\" rows=\"3\" placeholder=\"Enter an instruction\" required></textarea>\n" +
-                "                    <button type=\"button\" class=\"remove-button\" onclick=\"removeField(this)\">Remove</button>"
-            container.append(input);
+            div.innerHTML = `<textarea name="instructions[${index}]" rows="3" placeholder="Enter an instruction" required></textarea>
+                <button type="button" class="remove-button" onclick="removeField(this)">Remove</button>`;
+            container.append(div);
         }
 
         /**

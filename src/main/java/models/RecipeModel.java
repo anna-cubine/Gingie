@@ -35,7 +35,7 @@ public class RecipeModel {
         }
         String[] splitString = input.split("\n");
         List<String> strList = new ArrayList<String>(splitString.length);
-        for (String s : strList)
+        for (String s : splitString)
             strList.add(s.trim());
         return strList;
     }
