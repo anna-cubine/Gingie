@@ -13,7 +13,6 @@ import java.util.List;
 @Controller
 public class MainController {
     private final RecipeService recipeService;
-    private static int recipeCounter = 0;
     private final UserService userService;
 
     public MainController(RecipeService recipeService, UserService userService) {
@@ -21,8 +20,24 @@ public class MainController {
         this.userService = userService;
     }
 
+    /**
+     * This is used for initial launch of the application. Since the application wants to start on
+     * category.html, and we want it to go to the category page, we set it up so the page will redirect
+     * to the category page on launch
+     * @return redirecting to /category
+     */
+    @GetMapping("/category.html")
+    public String redirectToCategory() {
+        return "redirect:/category";
+    }
+
+    /**
+     * Category page with various categories to click on to move the user to browse. When a category is clicked
+     * the controller will grab whichever recipes match that category ID and drop them in browse
+     * @return category page
+     */
     @GetMapping("/category")
-    public String category(Model model) {
+    public String category() {
         return "category";
     }
 
@@ -54,14 +69,6 @@ public class MainController {
         model.addAttribute("recipe", new RecipeModel());
         return "addRecipe";
     }
-    /*
-    THIS IS TO GET ALL RECIPES FOR THE BROWSE PAGE
-    @GetMapping
-    public String getAllRecipes(Model model) {
-        List<RecipeModel> recipes = recipeService.getAllRecipes();
-        model.addAttribute("recipes", recipes);
-        return "recipe.html";
-    }*/
 
     /*NEEDED FOR IMAGE ENCODING
       @RequestParam("image") MultipartFile image,*/
@@ -124,15 +131,52 @@ public class MainController {
         return "login";
     }
 
+    @GetMapping("/browseBreakfast")
+    public String browseBreakfast(Model model) {
+        List<RecipeModel> recipes = recipeService.getRecipeByCategory("Breakfast");
+        model.addAttribute("recipes", recipes);
+        return "browse";
+    }
+
+    @GetMapping("/browseLunch")
+    public String browseLunch(Model model) {
+        List<RecipeModel> recipes = recipeService.getRecipeByCategory("Lunch");
+        model.addAttribute("recipes", recipes);
+        return "browse";
+    }
+
+    @GetMapping("/browseDinner")
+    public String browseDinner(Model model) {
+        List<RecipeModel> recipes = recipeService.getRecipeByCategory("Dinner");
+        model.addAttribute("recipes", recipes);
+        return "browse";
+    }
+
+    @GetMapping("/browseDesert")
+    public String browseDesert(Model model) {
+        List<RecipeModel> recipes = recipeService.getRecipeByCategory("Desert");
+        model.addAttribute("recipes", recipes);
+        return "browse";
+    }
+
+    @GetMapping("/browseSnacks")
+    public String browseSnacks(Model model) {
+        List<RecipeModel> recipes = recipeService.getRecipeByCategory("Snacks");
+        model.addAttribute("recipes", recipes);
+        return "browse";
+    }
+
+    @GetMapping("/browseDrinks")
+    public String browseDrinks(Model model) {
+        List<RecipeModel> recipes = recipeService.getRecipeByCategory("Drinks");
+        model.addAttribute("recipes", recipes);
+        return "browse";
+    }
+
     @GetMapping("/browse")
     public String browse(Model model) {
         List<RecipeModel> recipes = recipeService.getAllRecipes();
         model.addAttribute("recipes", recipes);
         return "browse";
     }
-    /*
-    @GetMapping("/recipe")
-    public String recipe(Model model) {
-        return "recipe";
-    }*/
 }

@@ -41,11 +41,32 @@ public class RecipeRepository {
         return jdbcTemplate.query(query, recipeMapper());
     }
 
+    /**
+     * Getting all recipes from the database that matches the recipe ID given
+     * using SQL and jdbcTemplate
+     * @param id Given recipe ID
+     * @return Each Recipe Model that is taken from SQL
+     */
     public RecipeModel getRecipeById(int id) {
         String query = "SELECT * FROM Recipes WHERE recipeID = ?";
         return jdbcTemplate.queryForObject(query, recipeMapper(), id);
     }
 
+    /**
+     * Getting all recipes from the database that matches the category ID given
+     * using SQL and jdbcTemplate
+     * @param categoryID Given category ID
+     * @return Each recipe that is taken from SQL
+     */
+    public List<RecipeModel> getRecipeByCategoryID(String categoryID) {
+        String query = "SELECT * FROM Recipes WHERE categoryID = ?";
+        return jdbcTemplate.query(query, recipeMapper(), categoryID);
+    }
+
+    /**
+     * Mapping each part of a recipe to the recipe model so I can grab it in the controller
+     * @return Mapped Recipe Model
+     */
     public RowMapper<RecipeModel> recipeMapper() {
         return (rs, rowNum) -> new RecipeModel(
                 rs.getInt("recipeID"),

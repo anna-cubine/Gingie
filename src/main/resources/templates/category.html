@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -162,7 +162,7 @@
         <div class="dropdown" id="dropdownMenu">
             <a href="/login">Login</a>
             <a href="/register">Register</a>
-            <a href="userProfile.html">Profile</a>
+            <a href="../static/userProfile.html">Profile</a>
         </div>
     </div>
 </div>
@@ -170,13 +170,14 @@
 <div class="content">
     <div class="categories">Categories</div>
 
+    <!--Mapping the IDs to certain browse pages which will grab any recipe with that category ID-->
     <div class="button-grid">
-        <a href="/browse"><button class="button">Breakfast</button></a>
-        <a href="/browse"><button class="button">Lunch</button></a>
-        <a href="/browse"><button class="button">Dinner</button></a>
-        <a href="/browse"><button class="button">Dessert</button></a>
-        <a href="/browse"><button class="button">Snacks</button></a>
-        <a href="/browse"><button class="button">Drinks</button></a>
+        <a href="/browseBreakfast"><button class="button">Breakfast</button></a>
+        <a href="/browseLunch"><button class="button">Lunch</button></a>
+        <a href="/browseDinner"><button class="button">Dinner</button></a>
+        <a href="/browseDesert"><button class="button">Dessert</button></a>
+        <a href="/browseSnacks"><button class="button">Snacks</button></a>
+        <a href="/browseDrinks"><button class="button">Drinks</button></a>
         <a href="/browse"><button class="button">All</button></a>
     </div>
 </div>
