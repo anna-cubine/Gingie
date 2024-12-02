@@ -39,6 +39,11 @@ public class UserRepository {
         return jdbcTemplate.queryForObject(query, userMapper(), userID);
     }
 
+    public Users validateUser(String username, String password) {
+        String query = "SELECT * FROM Users WHERE username = ? and password = ?";
+        return jdbcTemplate.queryForObject(query, userMapper(), username, password);
+    }
+
     public RowMapper<Users> userMapper() {
         return (rs, rowNum) -> new Users(
                 rs.getInt("UserID"),

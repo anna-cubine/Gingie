@@ -1,5 +1,6 @@
 package controllers;
 
+import jakarta.servlet.http.HttpSession;
 import models.Comments;
 import models.RecipeModel;
 import models.Users;
@@ -158,13 +159,18 @@ public class MainController {
     }
 
     @PostMapping("/login")
-    public String login(@ModelAttribute Users user){
-        //currentUser = userService.getUser(user);
+    public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        HttpSession session) {
+        Users user = userService.validateUser(username, password);
+        session.setAttribute("userID", user.getUserID());
+
         return"redirect:/userProfile";
     }
 
     @GetMapping("/userProfile")
-    public String userProfile(@RequestParam("id") int userID, Model model) {
+    public String userProfile(Model model, HttpSession session) {
+        int userID = (int)session.getAttribute("userID");
         Users user = userService.getUser(userID);
         model.addAttribute("user", user);
         return "userProfile";

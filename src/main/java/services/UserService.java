@@ -23,6 +23,10 @@ public class UserService {
         userRepository.addUser(user);
     }
 
+    public Users validateUser(String username, String password) {
+        return userRepository.validateUser(username, password);
+    }
+
     public Users getUser(int userID) {
         return userRepository.getUser(userID);
     }
