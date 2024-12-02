@@ -182,6 +182,7 @@
             <button>Recipe detail</button>
         </a>
         <button class="card-button" th:each="recipes : ${recipes}">
+            <a th:href="@{/recipe(id=${recipes.recipeID})}">
                 <div class="card">
                     <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
                     <div class="card-info">
@@ -208,7 +209,7 @@
                 dropdown.style.display = 'none';
             }
         }
-    };
+    }
     /*
     function loadCards() {
         for (let i = 0; i < 5; i++) {
@@ -223,7 +224,6 @@
                 </div>
             </div>`;
         }*/
-    }
 </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package services;
 
+import models.Comments;
 import models.RecipeModel;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,18 @@ public class RecipeService {
      */
     public List<RecipeModel> getRecipeByCategory(String category) {
         return recipeRepository.getRecipeByCategoryID(category);
+    }
+
+    /**
+     * Gets any comment that have specified recipe ID
+     * @param id Recipe ID given from the recipe page
+     * @return All comments mapped to that recipe ID
+     */
+    public List<Comments> getComments(int id) {
+        return recipeRepository.getComments(id);
+    }
+
+    public void saveComment(Comments comment) {
     }
 
     /**

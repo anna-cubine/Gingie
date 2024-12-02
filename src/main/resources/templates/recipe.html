@@ -130,7 +130,11 @@
 
         .row {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
+        }
+
+        .add-comment {
+            display: block;
         }
     </style>
 </head>
@@ -173,8 +177,21 @@
             <li th:each="instruction, stat : ${recipe.instructions}" th:text="${instruction}">Instructions Not Found</li>
         </ul>
     </div>
-    <div class="comments">
+    <div>
         <h1>Comments</h1>
+        <!--Form section for adding comments-->
+        <form th:action="@{/saveComment}" method="post">
+            <!--Getting user and recipe ID using hidden fields-->
+            <!--<input type="hidden" name="userID" th:value="${comments.userID}"/>-->
+            <input type="hidden" name="recipeID" th:value="${recipe.recipeID}"/>
+
+            <textarea name="addComment" rows="5" cols="50" placeholder="Write a comment..."></textarea>
+            <button type="submit" class="add-comment">Submit Comment</button>
+        </form>
+        <!--Section for listing comments-->
+        <ul class="comments">
+            <li th:each="comment : ${comments}"></li>
+        </ul>
     </div>
 </div>
 <script>

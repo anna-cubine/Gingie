@@ -1,5 +1,6 @@
 package repositories;
 
+import models.Comments;
 import models.RecipeModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -30,6 +31,27 @@ public class RecipeRepository {
                 recipe.getCategoryID(),
                 "test",
                 0);
+    }
+
+    public void saveComment(Comments comment) {
+        String query = "INSERT INTO Comments (commentID, userID, recipeID, commentText, timestamp) VALUES (?, ?, ?,?,?)";
+        jdbcTemplate.update(query,
+                comment.getCommentID(),
+                comment.getUserID(),
+                comment.getRecipeID(),
+                comment.getCommentText(),
+                comment.getTimestamp());
+    }
+
+    /**
+     * Getting all comments from database that matches the recipe ID given
+     * using SQL and jdbc template
+     * @param id Given recipe ID
+     * @return All comments corresponding with recipe
+     */
+    public List<Comments> getComments(int id) {
+        String query = "SELECT * FROM Comments WHERE recipeID = ?";
+        return jdbcTemplate.query(query, commentsMapper(), id);
     }
 
     /**
@@ -75,6 +97,16 @@ public class RecipeRepository {
                 rs.getString("instructions"),
                 rs.getString("categoryID"),
                 rs.getDouble("averageRating")
+        );
+    }
+
+    public RowMapper<Comments> commentsMapper() {
+        return (rs, rowNum) -> new Comments(
+                rs.getInt("commentID"),
+                rs.getInt("userID"),
+                rs.getInt("recipeID"),
+                rs.getString("commentText"),
+                rs.getString("timestamp")
         );
     }
 }
