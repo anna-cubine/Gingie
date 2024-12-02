@@ -34,9 +34,9 @@ public class UserRepository {
      * Getting all recipes from the database using SQL query and jdbcTemplate
      * @return The query along with mapped recipe model.
      */
-    public List<Users> findUser() {
-        String query = "SELECT * FROM Users ";
-        return jdbcTemplate.query(query, userMapper());
+    public Users getUser(int userID) {
+        String query = "SELECT * FROM Users where userID = ?";
+        return jdbcTemplate.queryForObject(query, userMapper(), userID);
     }
 
     public RowMapper<Users> userMapper() {

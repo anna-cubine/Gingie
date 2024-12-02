@@ -16,6 +16,7 @@ import java.util.List;
 public class MainController {
     private final RecipeService recipeService;
     private final UserService userService;
+    private Users currentUser;
 
     public MainController(RecipeService recipeService, UserService userService) {
         this.recipeService = recipeService;
@@ -152,7 +153,21 @@ public class MainController {
 
     @GetMapping("/login")
     public String login(Model model) {
+        model.addAttribute("user", new Users());
         return "login";
+    }
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute Users user){
+        //currentUser = userService.getUser(user);
+        return"redirect:/userProfile";
+    }
+
+    @GetMapping("/userProfile")
+    public String userProfile(@RequestParam("id") int userID, Model model) {
+        Users user = userService.getUser(userID);
+        model.addAttribute("user", user);
+        return "userProfile";
     }
 
     @GetMapping("/browseBreakfast")
@@ -196,6 +211,8 @@ public class MainController {
         model.addAttribute("recipes", recipes);
         return "browse";
     }
+
+
 
     @GetMapping("/browse")
     public String browse(Model model) {

@@ -23,7 +23,7 @@ public class UserService {
         userRepository.addUser(user);
     }
 
-    public List<Users> findUser() {
-        return userRepository.findUser();
+    public Users getUser(int userID) {
+        return userRepository.getUser(userID);
     }
 }
