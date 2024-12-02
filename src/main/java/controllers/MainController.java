@@ -168,6 +168,7 @@ public class MainController {
         Users user = userService.getUser(userID);
         model.addAttribute("user", user);
         return "userProfile";
+
     }
 
     @GetMapping("/browseBreakfast")
