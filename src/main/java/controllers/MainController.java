@@ -63,6 +63,8 @@ public class MainController {
         //Getting the comments for the recipe using ID
         List<Comments> comments = recipeService.getComments(recipeID);
         model.addAttribute("comments", comments);
+        //Creating a new comment attribute to populate with data
+        model.addAttribute("newComment", new Comments());
         return "recipe";
     }
 
@@ -70,16 +72,22 @@ public class MainController {
      * Post mapping to save a comment to the database.
      * @param comment
      * @param recipeID
-     * @param userID
      * @return
      */
     @PostMapping("/saveComment")
     public String saveComment(@ModelAttribute Comments comment, @RequestParam("recipeID") int recipeID,
-                              @SessionAttribute(name = "userID", required = false) Integer userID) {
-        //If userID is null because user isn't logged in, create userID == 0 for a guest account
+                              HttpSession session) {
+        //commentID and userID are not being resolved in the html file
+        //Using integer for the possible null exception
+        Integer userID = (Integer)session.getAttribute("userID");
+
+        //If userID is not null then get the username from the ID
         if (userID == null)
-            userID = 0;
+            //Otherwise, redirect user to login
+            return "redirect:/login";
+
         comment.setUserID(userID);
+        comment.setUsername(userService.getUser(userID).getUsername());
 
         recipeService.saveComment(comment);
         return "redirect:/recipe?id="+recipeID;

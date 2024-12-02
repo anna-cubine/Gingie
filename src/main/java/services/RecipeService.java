@@ -56,6 +56,7 @@ public class RecipeService {
     }
 
     public void saveComment(Comments comment) {
+        recipeRepository.saveComment(comment);
     }
 
     /**

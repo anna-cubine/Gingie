@@ -34,13 +34,14 @@ public class RecipeRepository {
     }
 
     public void saveComment(Comments comment) {
-        String query = "INSERT INTO Comments (commentID, userID, recipeID, commentText, timestamp) VALUES (?, ?, ?,?,?)";
+        String query = "INSERT INTO Comments (commentID, userID, recipeID, commentText, timestamp, username) VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(query,
                 comment.getCommentID(),
                 comment.getUserID(),
                 comment.getRecipeID(),
                 comment.getCommentText(),
-                comment.getTimestamp());
+                comment.getTimestamp(),
+                comment.getUsername());
     }
 
     /**
@@ -106,7 +107,8 @@ public class RecipeRepository {
                 rs.getInt("userID"),
                 rs.getInt("recipeID"),
                 rs.getString("commentText"),
-                rs.getString("timestamp")
+                rs.getString("timestamp"),
+                rs.getString("username")
         );
     }
 }

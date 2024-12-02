@@ -136,6 +136,10 @@
         .add-comment {
             display: block;
         }
+
+        .comments-display {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -180,17 +184,25 @@
     <div>
         <h1>Comments</h1>
         <!--Form section for adding comments-->
-        <form th:action="@{/saveComment}" method="post">
+        <form th:action="@{/saveComment}" th:object="${newComment}" method="post">
             <!--Getting user and recipe ID using hidden fields-->
-            <!--<input type="hidden" name="userID" th:value="${comments.userID}"/>-->
+            <input type="hidden" name="userID" th:value="${newComment.userID}"/>
+            <input type="hidden" name="username" th:value="${newComment.username}"/>
             <input type="hidden" name="recipeID" th:value="${recipe.recipeID}"/>
+            <input type="hidden" name="commentID" th:value="${newComment.commentID}"/>
 
-            <textarea name="addComment" rows="5" cols="50" placeholder="Write a comment..."></textarea>
+            <textarea name="addComment" th:field="*{commentText}" rows="5" cols="50" placeholder="Write a comment..."></textarea>
             <button type="submit" class="add-comment">Submit Comment</button>
         </form>
         <!--Section for listing comments-->
         <ul class="comments">
-            <li th:each="comment : ${comments}"></li>
+            <li th:each="comment : ${comments}">
+                <p class="comments-display">
+                    <strong  th:text="${comment.username}"></strong>
+                    <br/>
+                    <span th:text="${comment.commentText}"></span>
+                </p>
+            </li>
         </ul>
     </div>
 </div>
