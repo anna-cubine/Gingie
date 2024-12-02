@@ -119,19 +119,26 @@
             border-radius: 4px;
         }
 
-        .card-button {
+        .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            gap: 10px;
         }
 
-        .card-button-hover {
+        .card-button {
             background-color: white;
+            border: none;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 15px;
+            padding: 0;
             text-align: center;
-            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .card-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
 
         .card img {
@@ -141,11 +148,13 @@
             object-fit: cover;
             background-color: #ccc;
             margin-bottom: 10px;
+            border-radius: 8px 8px 0 0;
         }
 
         .card-info {
             font-size: 0.9rem;
             color: #555;
+            padding: 10px;
         }
 
         .card-info strong {
@@ -156,10 +165,10 @@
     </style>
 </head>
 <body onload="loadCards()">
-<button class="container">
+<div class="container">
     <header class="header">
         <div class="logo">
-            <a href="/category"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
+            <a href="../index.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
         </div>
 
         <div class="search-bar">
@@ -172,15 +181,17 @@
             <div class="dropdown" id="dropdownMenu">
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
-                <a href="userProfile.html">Profile</a>
+                <a href="/userProfile">Profile</a>
             </div>
         </div>
+
     </header>
+    <div class="categories">Categories</div>
+    <a href="/addRecipe">
+        <button>Recipe detail</button>
+    </a>
     <main>
-        <div class="categories">Categories</div>
-        <a href="/addRecipe">
-            <button>Recipe detail</button>
-        </a>
+
         <button class="card-button" th:each="recipes : ${recipes}">
             <a th:href="@{/recipe(id=${recipes.recipeID})}">
                 <div class="card">
@@ -194,36 +205,22 @@
             </a>
         </button>
     </main>
-</button>
+    </div>
 
-<script>
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdownMenu');
-        dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
-    }
-
-    window.onclick = function(event) {
-        if (!event.target.closest('.header-icons')) {
+    <script>
+        function toggleDropdown() {
             const dropdown = document.getElementById('dropdownMenu');
-            if (dropdown.style.display === 'flex') {
-                dropdown.style.display = 'none';
+            dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.closest('.header-icons')) {
+                const dropdown = document.getElementById('dropdownMenu');
+                if (dropdown.style.display === 'flex') {
+                    dropdown.style.display = 'none';
+                }
             }
         }
-    }
-    /*
-    function loadCards() {
-        for (let i = 0; i < 5; i++) {
-            const cards = document.querySelector(".cards");
-            cards.innerHTML += `
-            <div className="card">
-                <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
-                <div className="card-info">
-                    <strong class="dishName" th:text="${recipes.dishName}"></strong>
-                    <p class="rating" th:text="${recipes.averageRating}"></p> <br/>
-                    <p class="category" th:text="${recipes.categoryID}"></p>
-                </div>
-            </div>`;
-        }*/
-</script>
+    </script>
 </body>
 </html>
