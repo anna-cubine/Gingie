@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Profile</title>
+  <title>No User Logged In</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -133,51 +133,36 @@
     .dropdown a:hover {
       background-color: #f2f2f2;
     }
-
-    .section label{
-        font-weight: bolder;
-    }
   </style>
 </head>
 <body>
 
 <div class="container">
-    <header class="header">
-      <div class="logo">
-        <a href="/category"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
-      </div>
-
-      <div class="search-bar">
-        <input type="text" placeholder="Search...">
-      </div>
-
-      <div class="header-icons">
-        <a href="/favorites"><button class="button">⭐</button></a>
-        <button class="button" onclick="toggleDropdown()">👤</button>
-        <div class="dropdown" id="dropdownMenu">
-          <a href="/login">Login</a>
-          <a href="/register">Register</a>
-          <a href="/userProfile">Profile</a>
-        </div>
-      </div>
-    </header>
-
-    <div class="box">
-        <div>
-        <h2>Profile</h2>
-        <div class="section">
-            <label>Username:</label>
-            <p th:text="${user.username}"></p>
-        </div>
-        <div class="section">
-            <label>Email:</label>
-            <p th:text="${user.email}"></p>
-        </div>
-
-        <div class="buttons">
-          <a href="/logout"><button>Logout</button></a>
-        </div>
+  <header class="header">
+    <div class="logo">
+      <a href="/category"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
     </div>
+
+    <div class="header-icons">
+      <a href="/favorites"><button class="button">⭐</button></a>
+      <button class="button" onclick="toggleDropdown()">👤</button>
+      <div class="dropdown" id="dropdownMenu">
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/userProfile">Profile</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="box">
+    <div>
+      <h2>There is no currently logged-in user</h2>
+    </div>
+
+    <div class="buttons">
+      <a href="/login"><button>Login</button></a>
+    </div>
+  </div>
 </div>
 <script>
   function toggleDropdown() {
@@ -194,6 +179,5 @@
     }
   };
 </script>
-
 </body>
 </html>

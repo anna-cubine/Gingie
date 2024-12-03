@@ -7,7 +7,6 @@ import models.Users;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.RecipeService;
 import services.UserService;
 
@@ -144,10 +143,9 @@ public class MainController {
         return "register";
     }
     /**
-     * Post mapping for the recipe. This is used to save the recipe, moving through the layers closer to
-     * the database
-     * @param user Taking the populated recipe model data given from the user in the forms
-     * @return Redirecting the user to the browse page
+     * Post mapping for the register. This is used to add a user to the database
+     * @param user taking the populated Users model
+     * @return Redirecting the user to the login page
      */
     @PostMapping("/register")
     public String register(@ModelAttribute Users user) {
@@ -160,29 +158,67 @@ public class MainController {
         return "favorites";
     }
 
+    /**
+     * login page using spring boot mapping
+     * @param model Gets a model to add Users model to
+     * @return Returns the path of where the user is being taken
+     */
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("user", new Users());
         return "login";
     }
 
+    /**
+     * Post mapping for the login. This is used to allow the user to login to their profile found in the database
+     * @param username username of the user
+     * @param password password of the user
+     * @param session HttpSession to save the current logged-in user to
+     * @return returns the path of where the user is being taken, in this case to the user profile page
+     */
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
                         HttpSession session) {
+        //check user is in database
         Users user = userService.validateUser(username, password);
+        //add userID to session attribute userID.
+        //userID attribute shows the current logged-in user for the session
         session.setAttribute("userID", user.getUserID());
-
         return"redirect:/userProfile";
     }
 
+    /**
+     * user profile page using spring boot mapping
+     * @param model Gets a Model to add the Users model to
+     * @param session HttpSession to save the current logged-in user to
+     * @return either the no current user is logged in page, or the user profile page
+     */
     @GetMapping("/userProfile")
     public String userProfile(Model model, HttpSession session) {
-        int userID = (int)session.getAttribute("userID");
+        int userID;
+        //try to get the sessions userID attribute
+        try {
+            userID = (int) session.getAttribute("userID");
+        }catch(NullPointerException e) { //userID attribute is null, no one is logged in
+            return "noLogIn";
+        }
+        //get the logged-in user's details from the database
         Users user = userService.getUser(userID);
         model.addAttribute("user", user);
         return "userProfile";
+    }
 
+    /**
+     * mapping to logout
+     * @param session HttpSession that has the current logged-in user
+     * @return redirect to userProfile page
+     */
+    @GetMapping("/logout")
+    public String userProfile(HttpSession session) {
+        //set sessions userID to null
+        session.setAttribute("userID", null);
+        return "redirect:/userProfile";
     }
 
     @GetMapping("/browseBreakfast")
