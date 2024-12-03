@@ -8,23 +8,26 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class RecipeRepository {
-
+    
+    private List<RecipeModel> recipes = new ArrayList<>();
     private final JdbcTemplate jdbcTemplate;
 
     public RecipeRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+
     /**
      * Adding recipe to database using SQL query and jdbcTemplate
      * @param recipe Taking in a recipe model to add to database
      */
     public void saveRecipe(RecipeModel recipe) {
-        String query = "INSERT INTO Recipes (recipeID, name, ingredients, instructions, categoryID, user_username, averageRating) VALUES (?,?,?,?,?,?,?) ";
+        String query = "INSERT INTO Recipes (recipeID, name, ingredients, instructions, categoryID, user_username, averageRating,imagePath) VALUES (?,?,?,?,?,?,?,?) ";
         jdbcTemplate.update(query,
                 recipe.getRecipeID(),
                 recipe.getDishName(),
@@ -32,7 +35,8 @@ public class RecipeRepository {
                 String.join("\n",recipe.getInstructions()),
                 recipe.getCategoryID(),
                 "test",
-                0);
+                0,
+                recipe.getimagePath ());
     }
 
     public void saveRating(Ratings rating) {
@@ -150,7 +154,8 @@ public class RecipeRepository {
                 rs.getString("ingredients"),
                 rs.getString("instructions"),
                 rs.getString("categoryID"),
-                rs.getDouble("averageRating")
+                rs.getDouble("averageRating"),
+                rs.getString("imagePath")
         );
     }
 
@@ -178,5 +183,15 @@ public class RecipeRepository {
                 rs.getInt("userID"),
                 rs.getInt("recipeID")
         );
+    }
+    // Save a recipe to the list (simulate database save)
+    public void save(RecipeModel recipe) {
+        recipes.add(recipe);
+        System.out.println("Saved recipe: " + recipe);
+    }
+    
+    // Retrieve all recipes
+    public List<RecipeModel> findAll() {
+        return recipes;
     }
 }

@@ -134,6 +134,11 @@
             border: 1px solid #ddd;
         }
 
+        .card-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
         .card img {
             width: 100%;
             height: auto;
@@ -181,7 +186,7 @@
         <button class="card-button" th:each="recipes : ${recipes}">
             <a th:href="@{/recipe(id=${recipes.recipeID})}">
                 <div class="card">
-                    <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
+                    <img th:src="@{/images/{imagePath}(imagePath=${recipes.getimagePath()})}" alt="Recipe Image">
                     <div class="card-info">
                         <strong class="dishName" th:text="${recipes.dishName}"></strong>
                         <p class="rating" th:text="${recipes.averageRating}"></p> <br/>
@@ -222,7 +227,7 @@
                 cards.innerHTML += `
                 <button class="card-button">
                     <div class="card">
-                        <img src="${recipe.imageUrl}" alt="${recipe.name}" />
+                        <img th:src="@{/images/{imagePath}(imagePath=${recipe.getimagePath()})}" alt="Recipe Image">
                         <div class="card-info">
                             <strong>${recipe.name}</strong>
                             ${recipe.rating} ★ <br/>

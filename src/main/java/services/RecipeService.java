@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 import repositories.RecipeRepository;
 
 import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class RecipeService {
@@ -21,7 +26,31 @@ public class RecipeService {
     public RecipeService( RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
     }
-
+    
+    public void addRecipe(RecipeModel recipe) {
+        recipeRepository.save(recipe);
+    }
+    
+    // Save recipe along with the image
+    public void addRecipeWithImage(RecipeModel recipe, File imageFile) throws IOException {
+        if (imageFile != null) {
+            String imagesDir = "src/main/resources/static/images/recipes/";
+            File dir = new File(imagesDir);
+            if (!dir.exists()) dir.mkdirs(); // Ensure directory exists
+            
+            // Save the image file
+            Path imagePath = Paths.get(imagesDir + imageFile.getName());
+            Files.copy(imageFile.toPath(), imagePath);
+            
+            // Set the image path in the recipe model
+            recipe.setimagePath("/images/recipes/" + imageFile.getName());
+        }
+        
+        // Save the recipe to the repository
+        recipeRepository.save(recipe);
+    }
+    
+    
     /**
      * Getting all recipes from the repository
      * @return List of recipe models mapped properly

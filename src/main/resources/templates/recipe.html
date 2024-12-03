@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,38 +25,50 @@
         .header {
             background-color: #ff8c42;
             display: flex;
-            padding: 8px; /* Reduced padding */
+            padding: 8px;
             justify-content: space-between;
             align-items: center;
-            height: 60px; /* Set height for consistency */
+            height: 60px;
+            width: 100%;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: 30px;
         }
 
         .header .logo img {
-            width: 50px; /* Smaller logo size */
-            height: 50px;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
         }
 
         .header .search-bar input[type="text"] {
-            padding: 8px; /* Smaller padding */
-            width: 500px; /* Adjusted for smaller header */
-            font-size: 0.9em; /* Smaller text */
+            padding: 10px;
+            width: 700px;
+            font-size: 1em;
+            border: none;
+            outline: none;
+            border-radius: 5px;
         }
 
         .header-icons {
             display: flex;
             align-items: center;
-            gap: 15px; /* Reduced gap for compact layout */
-            margin-right: 20px; /* Adjusted right margin */
+            gap: 20px;
+            margin-right: 50px;
             position: relative;
         }
 
         .header-icons button {
             background-color: #ff8c42;
             border: none;
-            padding: 5px; /* Smaller padding */
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1.2em; /* Adjusted icon size */
+            font-size: 1.5em;
             color: white;
         }
 
@@ -66,11 +78,11 @@
 
         .dropdown {
             position: absolute;
-            top: 100%; /* Align dropdown below the button */
+            top: 100%;
             right: 0;
             background-color: white;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none; /* Initially hidden */
+            display: none;
             flex-direction: column;
             border-radius: 5px;
             z-index: 1000;
@@ -116,74 +128,117 @@
         }
 
         .dishContainer {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            background: linear-gradient(to top, black, transparent), url("/images/oyakodon01-800x530.jpg");
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+            gap: 20px;
             position: relative;
-            width: 800px;
-            height: 550px;
-            color: white;
         }
 
-        .dishContainer h2 {
+        .dishContainer img {
+            width: 350px;
+            height: auto;
+            max-height: 350px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .dishTitle {
             position: absolute;
-            bottom: 60px;
-            left: 3px;
-            font-size: 30px;
-        }
-
-        .dishName {
-            bottom: 8px;
-            left: 16px;
-            font-size: 20px;
+            bottom: -30px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 2em;
+            margin: 0;
         }
 
         .star-rating {
-            display: inline-block;
-            font-size: 1.5em;
-            color: lightgrey;
+            position: absolute;
+            bottom: 10px;
+            left: 50%; /* Centers relative to the image */
+            transform: translateX(-50%); /* Adjust position for centering */
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .star-rating label {
+            font-size: 2em;
+            color: lightgray;
             cursor: pointer;
         }
 
-        /*Don't want to show the input buttons*/
         .star-rating input {
             display: none;
         }
 
-        .star-rating label {
-            padding: 0 5px;
-            color: gray;
-            transition: color 0.2s ease-in-out;
-            font-size: 2em; /*star size*/
-        }
-
-        .star-rating input:checked label {
-            color: gold; /*Change color when selected*/
-        }
-
-        /*Hover color change will effect stars before as well*/
+        .star-rating input:checked ~ label,
         .star-rating label:hover,
-        .star-rating label:hover ~ label{
-            color:gold; /*Change color when hovered over*/
-        }
-
-        .star-rating input:checked ~ label:hover,
-        .star-rating input:checked ~ label{
-            color:gold;
+        .star-rating label:hover ~ label {
+            color: gold;
         }
 
         .row {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
+            margin-top: 50px;
+            gap: 20px;
+            padding: 0 20px;
         }
 
-        .add-comment {
-            display: block;
+        .row > div {
+            flex: 1;
+            max-height: 350px; /* Control the total height of each section */
+            margin: 0 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .comments-display {
-            display: block;
+        .row h1 {
+            margin-bottom: 10px;
+            flex-shrink: 0; /* Prevent header from resizing or scrolling */
+        }
+
+        .scrollable-content {
+            overflow-y: auto; /* Enable vertical scrolling for content */
+            flex-grow: 1; /* Allow this part to take remaining space */
+        }
+
+        .separated-item {
+            padding: 5px 0;
+            border-bottom: 1px solid #ccc; /* Line between items */
+            list-style: none; /* Remove bullets */
+        }
+
+        .separated-item:last-child {
+            border-bottom: none; /* Remove line under the last item */
+        }
+
+        .row ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .row ul li {
+            margin: 5px 0;
+        }
+
+        .row form textarea {
+            width: 90%;
+            margin: 10px 0;
+        }
+
+        .row .comments li {
+            margin: 10px 0;
         }
     </style>
 </head>
@@ -215,33 +270,47 @@
     </header>
 </div>
 <div class="dishContainer">
-    <h2 class="dishName" th:text="${recipe.dishName}">Dish name</h2>
-    <div th:each="i : ${#numbers.sequence(1, 5)}" class="star-rating">
-        <input type="radio" name="rating" th:value="${i}" id="star-${i}" th:checked="${rating == i}">
-        <label for="star-${i}">☆</label>
+    <img th:src="@{/images/{imagePath}(imagePath=${recipe.getimagePath()})}" alt="Recipe Image">
+    <div class="star-rating">
+        <input type="radio" name="rating" id="star-1" value="1"><label for="star-1">☆</label>
+        <input type="radio" name="rating" id="star-2" value="2"><label for="star-2">☆</label>
+        <input type="radio" name="rating" id="star-3" value="3"><label for="star-3">☆</label>
+        <input type="radio" name="rating" id="star-4" value="4"><label for="star-4">☆</label>
+        <input type="radio" name="rating" id="star-5" value="5"><label for="star-5">☆</label>
     </div>
-</div>
-<!-- Display message if the recipe is already in favorites or if it is successfully added-->
-<div th:if="${message != null}">
-    <p th:text="${message}"></p>
+    <h2 class="dishTitle" th:text="${recipe.dishName}">Dish name</h2>
 </div>
 <div class="row">
     <div>
         <h1>Ingredients</h1>
-        <ul class="ingredients">
-            <!--Bulleted list of ingredients-->
-            <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}">Ingredients Not Found</li>
-        </ul>
+        <div class="scrollable-content">
+            <li th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}" class="separated-item">
+                Ingredients Not Found
+            </li>
+        </div>
     </div>
     <div>
         <h1>Instructions</h1>
-        <ul class="instructions">
-            <!--Bulleted (Maybe try to add numbers using stat.count) list of instructions-->
-            <li th:each="instruction, stat : ${recipe.instructions}" th:text="${instruction}">Instructions Not Found</li>
-        </ul>
+        <div class="scrollable-content">
+            <ul class="instructions">
+                <li th:each="instruction, stat : ${recipe.instructions}" th:text="${instruction}" class="separated-item">
+                    Instructions Not Found
+                </li>
+            </ul>
+        </div>
     </div>
     <div>
         <h1>Comments</h1>
+        <div class="scrollable-content">
+            <ul class="comments">
+                <li th:each="comment : ${comments}" class="separated-item">
+                    <p>
+                        <strong th:text="${comment.username}"></strong><br/>
+                        <span th:text="${comment.commentText}"></span>
+                    </p>
+                </li>
+            </ul>
+        </div>
         <!--Form section for adding comments-->
         <form th:action="@{/saveComment}" th:object="${newComment}" method="post">
             <!--Getting user and recipe ID using hidden fields-->
@@ -253,20 +322,9 @@
             <textarea name="addComment" th:field="*{commentText}" rows="5" cols="50" placeholder="Write a comment..."></textarea>
             <button type="submit" class="add-comment">Submit Comment</button>
         </form>
-        <!--Section for listing comments-->
-        <ul class="comments">
-            <li th:each="comment : ${comments}">
-                <p class="comments-display">
-                    <strong  th:text="${comment.username}"></strong>
-                    <br/>
-                    <span th:text="${comment.commentText}"></span>
-                </p>
-            </li>
-        </ul>
     </div>
 </div>
 <script>
-
     function toggleDropdown(id) {
         const dropdown = document.getElementById(id);
         dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
@@ -280,6 +338,27 @@
             }
         }
     };
+
+    function formatText(containerId) {
+        const container = document.getElementById(containerId);
+        const text = container.textContent; // Get plain text
+        const lines = text.split('\n'); // Split into lines by newline
+        container.innerHTML = ''; // Clear the container
+
+        lines.forEach((line, index) => {
+            const div = document.createElement('div');
+            div.textContent = line;
+            div.style.padding = '5px 0';
+            if (index !== lines.length - 1) {
+                div.style.borderBottom = '1px solid #ccc'; // Add separator
+            }
+            container.appendChild(div);
+        });
+    }
+
+    // Apply to ingredients and instructions
+    formatText('ingredients-container');
+    formatText('instructions-container');
 </script>
 </body>
 </html>
