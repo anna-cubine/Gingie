@@ -1,6 +1,8 @@
 package services;
 
 import models.Comments;
+import models.Favorites;
+import models.Ratings;
 import models.RecipeModel;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,20 @@ public class RecipeService {
     public RecipeModel getRecipeById(int id) {
         return recipeRepository.getRecipeById(id);
     }
+    /*
+    public List<RecipeModel> getRecipesByID(int recipeID) {
+        return recipeRepository.getRecipesByID(recipeID);
+    }*/
+
+    /**
+     * Checking if recipe is already favorited using userID and recipeID
+     * @param userID currect user
+     * @param recipeID recipe page user is on
+     * @return boolean of whether the recipe is already favorited or not
+     */
+    public boolean isAlreadyFavorited(int userID, int recipeID) {
+        return recipeRepository.isAlreadyFavorite(userID, recipeID);
+    }
 
     /**
      * Gets any recipes models that have the specified category ID
@@ -47,6 +63,32 @@ public class RecipeService {
     }
 
     /**
+     * Saving rating to database
+     * @param rating Given rating for current recipe page user is on
+     */
+    public void saveRating(Ratings rating) {
+        recipeRepository.saveRating(rating);
+    }
+
+    /**
+     * Saving favorite to database
+     * @param userID current user
+     * @param recipeID current recipe page
+     */
+    public void saveFavorite(int userID, int recipeID) {
+        recipeRepository.saveFavorite(userID, recipeID);
+    }
+
+    /**
+     * Getting list of favorites from the userID
+     * @param userID current logged in user
+     * @return List of favorites
+     */
+    public List<Favorites> getFavoritesByUserID(int userID) {
+        return recipeRepository.getFavoritesByUserID(userID);
+    }
+
+    /**
      * Gets any comment that have specified recipe ID
      * @param id Recipe ID given from the recipe page
      * @return All comments mapped to that recipe ID
@@ -55,6 +97,10 @@ public class RecipeService {
         return recipeRepository.getComments(id);
     }
 
+    /**
+     * Method to save comment, bridging between controller and repository
+     * @param comment Comment with populated data
+     */
     public void saveComment(Comments comment) {
         recipeRepository.saveComment(comment);
     }

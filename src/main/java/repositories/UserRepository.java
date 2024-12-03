@@ -1,6 +1,7 @@
 package repositories;
 
 import models.Users;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -48,7 +49,12 @@ public class UserRepository {
      */
     public Users validateUser(String username, String password) {
         String query = "SELECT * FROM Users WHERE username = ? and password = ?";
-        return jdbcTemplate.queryForObject(query, userMapper(), username, password);
+        try {
+            return jdbcTemplate.queryForObject(query, userMapper(), username, password);
+        } catch (EmptyResultDataAccessException e) {
+            //Adding authentication handling
+            return null;
+        }
     }
 
     public RowMapper<Users> userMapper() {

@@ -1,15 +1,15 @@
 package controllers;
 
 import jakarta.servlet.http.HttpSession;
-import models.Comments;
-import models.RecipeModel;
-import models.Users;
+import models.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.RecipeService;
 import services.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -59,6 +59,8 @@ public class MainController {
         recipe.setIngredients(recipe.getIngredients());
         recipe.setInstructions(recipe.getInstructions());
         model.addAttribute("recipe", recipe);
+        //Getting average rating for recipe
+        model.addAttribute("rating", recipe.getAverageRating());
         //Getting the comments for the recipe using ID
         List<Comments> comments = recipeService.getComments(recipeID);
         model.addAttribute("comments", comments);
@@ -67,11 +69,52 @@ public class MainController {
         return "recipe";
     }
 
+    @PostMapping("/rate")
+    public String rate(@ModelAttribute Ratings rating, @RequestParam int stars,
+                       @RequestParam("recipeID") int recipeID){
+        recipeService.saveRating(rating);
+        RecipeModel recipe = recipeService.getRecipeById(recipeID);
+        recipe.setRatingCounter(recipe.getRatingCounter()+1);
+        recipe.setAverageRating((recipe.getAverageRating() + stars)/recipe.getRatingCounter());
+
+        return "redirect:/recipe/" + stars;
+    }
+
     /**
-     * Post mapping to save a comment to the database.
-     * @param comment
-     * @param recipeID
-     * @return
+     * Post mapping for adding a favorite in the recipe detail page.
+     * Error handling for a user that's not logged in and a user that has
+     * already favorited the item.
+     * @param recipeID Recipe ID of that page
+     * @param redirectAttributes Attributes given when redirected that gives an error message
+     * @param session Session that gives userID
+     * @return Redirects user to either login or same page user was on
+     */
+    @PostMapping("/addFavorite")
+    public String addFavorite(@RequestParam("recipeID") int recipeID,
+                              RedirectAttributes redirectAttributes,
+                              HttpSession session) {
+        Integer userID = (Integer)session.getAttribute("userID");
+        if(userID == null)
+            return "redirect:/login";
+
+        boolean alreadyFavorited = recipeService.isAlreadyFavorited(userID, recipeID);
+        if(alreadyFavorited){
+            redirectAttributes.addFlashAttribute("message", "This recipe is already in your favorites");
+            return "redirect:/recipe?id="+recipeID;
+        }
+
+        recipeService.saveFavorite(userID, recipeID);
+        redirectAttributes.addFlashAttribute("message", "You have successfully added favorite");
+        return "redirect:/recipe?id="+recipeID;
+    }
+
+    /**
+     * Post mapping to save a comment to the database. If user isn't logged in, they will be redirected
+     * to the login page. Otherwise, user ID and username will be given to comment object and comment will
+     * be saved to database
+     * @param comment Model attribute, comment ojeect
+     * @param recipeID ID for specific recipe page so comments aren't showing up on multiple recipe pages
+     * @return Reloading the page
      */
     @PostMapping("/saveComment")
     public String saveComment(@ModelAttribute Comments comment, @RequestParam("recipeID") int recipeID,
@@ -154,7 +197,25 @@ public class MainController {
     }
 
     @GetMapping("/favorites")
-    public String favorites(Model model) {
+    public String favorites(HttpSession session,
+                            Model model) {
+        Integer userID = (Integer)session.getAttribute("userID");
+        if(userID == null)
+            return "redirect:/login";
+
+        List<Favorites> favorites = recipeService.getFavoritesByUserID(userID);
+        model.addAttribute("favorites", favorites);
+
+        List<RecipeModel> recipes = new ArrayList<>();
+
+        for (Favorites favorite : favorites) {
+            RecipeModel recipe = recipeService.getRecipeById(favorite.getRecipeID());
+            if (recipe != null) {
+                recipes.add(recipe);
+            }
+        }
+
+        model.addAttribute("recipes", recipes);
         return "favorites";
     }
 
@@ -179,9 +240,17 @@ public class MainController {
     @PostMapping("/login")
     public String login(@RequestParam String username,
                         @RequestParam String password,
-                        HttpSession session) {
+                        RedirectAttributes redirectAttributes,
+                        HttpSession session, Model model) {
         //check user is in database
         Users user = userService.validateUser(username, password);
+        //If nothing was returned from login because user entered wrong credentials,
+        //Login error is created and projected onto the view
+        if(user == null) {
+            redirectAttributes.addFlashAttribute("loginError", "Invalid credentials, please try again");
+            return "redirect:/login";
+        }
+
         //add userID to session attribute userID.
         //userID attribute shows the current logged-in user for the session
         session.setAttribute("userID", user.getUserID());

@@ -181,6 +181,10 @@
         </form>
 
         <a href="/register"><button>New User?</button></a>
+
+        <div th:if="${loginError != null}" class="error">
+            <p th:text="${loginError}"></p>
+        </div>
     </div>
 </div>
 <script>

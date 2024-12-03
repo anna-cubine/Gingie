@@ -11,6 +11,8 @@ public class RecipeModel {
     private String categoryID;
     private double averageRating;
 
+    private int ratingCounter;
+
     //No argument constructor for form binding
     public RecipeModel() {
     }
@@ -59,6 +61,7 @@ public class RecipeModel {
     public List<String> getInstructions() {return instructions;}
     public String getCategoryID() {return categoryID;}
     public double getAverageRating() {return averageRating;}
+    public int getRatingCounter() {return ratingCounter;}
 
     public void setRecipeID(int recipeID) {this.recipeID = recipeID;}
     public void setDishName(String dishName) {this.dishName = dishName;}
@@ -66,4 +69,5 @@ public class RecipeModel {
     public void setInstructions(List<String> instructions) {this.instructions = instructions;}
     public void setCategoryID(String categoryID) {this.categoryID = categoryID;}
     public void setAverageRating(double averageRating) {this.averageRating = averageRating;}
+    public void setRatingCounter(int ratingCounter) {this.ratingCounter = ratingCounter;}
 }

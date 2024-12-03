@@ -94,6 +94,23 @@
             background-color: #f2f2f2;
         }
 
+        .favoriteAdd {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #333;
+            font-size: 1em;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .favoriteAdd:last-child {
+            border-bottom: none;
+        }
+
+        .favoriteAdd:hover {
+            background-color: #f2f2f2;
+        }
+
         main {
             padding: 20px;
         }
@@ -111,21 +128,49 @@
 
         .dishContainer h2 {
             position: absolute;
-            bottom: 30px;
+            bottom: 60px;
             left: 3px;
-            font-size: large;
-        }
-
-        .dishContainer h3 {
-            position: absolute;
-            bottom: 0;
-            left: 3px;
+            font-size: 30px;
         }
 
         .dishName {
             bottom: 8px;
             left: 16px;
-            font-size: 18px;
+            font-size: 20px;
+        }
+
+        .star-rating {
+            display: inline-block;
+            font-size: 1.5em;
+            color: lightgrey;
+            cursor: pointer;
+        }
+
+        /*Don't want to show the input buttons*/
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            padding: 0 5px;
+            color: gray;
+            transition: color 0.2s ease-in-out;
+            font-size: 2em; /*star size*/
+        }
+
+        .star-rating input:checked label {
+            color: gold; /*Change color when selected*/
+        }
+
+        /*Hover color change will effect stars before as well*/
+        .star-rating label:hover,
+        .star-rating label:hover ~ label{
+            color:gold; /*Change color when hovered over*/
+        }
+
+        .star-rating input:checked ~ label:hover,
+        .star-rating input:checked ~ label{
+            color:gold;
         }
 
         .row {
@@ -152,8 +197,15 @@
             <input type="text" placeholder="Search">
         </div>
         <div class="header-icons">
-            <a href="/favorites"><button class="button">⭐</button></a>
-            <button class="button" onclick="toggleDropdown()">👤</button>
+            <button class="button" onclick="toggleDropdown('favoriteDropdown')">⭐</button>
+            <div class="dropdown" id="favoriteDropdown">
+                <form id="favorites-form" th:action="@{/addFavorite}" method="post">
+                    <input type="hidden" name="recipeID" th:value="${recipe.recipeID}"/>
+                </form>
+                <button class="favoriteAdd" onClick="document.getElementById('favorites-form').submit()">Add to favorites</button>
+                <a href="/favorites">Go to favorites</a>
+            </div>
+            <button class="button" onclick="toggleDropdown('dropdownMenu')">👤</button>
             <div class="dropdown" id="dropdownMenu">
                 <a href="/login">Login</a>
                 <a href="/register">Register</a>
@@ -164,7 +216,14 @@
 </div>
 <div class="dishContainer">
     <h2 class="dishName" th:text="${recipe.dishName}">Dish name</h2>
-    <h3 class="dishRating" th:text="${recipe.averageRating}">Rating</h3>
+    <div th:each="i : ${#numbers.sequence(1, 5)}" class="star-rating">
+        <input type="radio" name="rating" th:value="${i}" id="star-${i}" th:checked="${rating == i}">
+        <label for="star-${i}">☆</label>
+    </div>
+</div>
+<!-- Display message if the recipe is already in favorites or if it is successfully added-->
+<div th:if="${message != null}">
+    <p th:text="${message}"></p>
 </div>
 <div class="row">
     <div>
@@ -207,8 +266,9 @@
     </div>
 </div>
 <script>
-    function toggleDropdown() {
-        const dropdown = document.getElementById('dropdownMenu');
+
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
         dropdown.style.display = dropdown.style.display === 'flex' ? 'none' : 'flex';
     }
 

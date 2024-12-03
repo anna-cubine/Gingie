@@ -1,6 +1,8 @@
 package repositories;
 
 import models.Comments;
+import models.Favorites;
+import models.Ratings;
 import models.RecipeModel;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -33,6 +35,20 @@ public class RecipeRepository {
                 0);
     }
 
+    public void saveRating(Ratings rating) {
+        String query = "INSERT INTO Ratings (ratingID, userID, recipeID, stars, timestamp) VALUES (?,?, ?, ?, ?)";
+        jdbcTemplate.update(query,
+                rating.getRatingID(),
+                rating.getUserID(),
+                rating.getRecipeID(),
+                rating.getStars(),
+                rating.getTimestamp());
+    }
+
+    /**
+     * Saving new comment to database using jdbc query
+     * @param comment Comment object with data populated
+     */
     public void saveComment(Comments comment) {
         String query = "INSERT INTO Comments (commentID, userID, recipeID, commentText, timestamp, username) VALUES (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(query,
@@ -76,6 +92,27 @@ public class RecipeRepository {
     }
 
     /**
+     * Saving the favorite from the recipe page
+     * @param userID Current logged in user
+     * @param recipeID Current recipe page
+     */
+    public void saveFavorite(int userID, int recipeID) {
+        String query = "INSERT INTO Favorites (userID, recipeID) VALUES (?, ?)";
+        jdbcTemplate.update(query, userID,
+                recipeID);
+    }
+
+    /**
+     * Getting all the favorites from the current user
+     * @param userID current logged in user
+     * @return All favorites tied to that user
+     */
+    public List<Favorites> getFavoritesByUserID(int userID) {
+        String query = "SELECT * FROM Favorites WHERE userID = ?";
+        return jdbcTemplate.query(query, favoritesMapper(), userID);
+    }
+
+    /**
      * Getting all recipes from the database that matches the category ID given
      * using SQL and jdbcTemplate
      * @param categoryID Given category ID
@@ -84,6 +121,22 @@ public class RecipeRepository {
     public List<RecipeModel> getRecipeByCategoryID(String categoryID) {
         String query = "SELECT * FROM Recipes WHERE categoryID = ?";
         return jdbcTemplate.query(query, recipeMapper(), categoryID);
+    }
+
+    /**
+     * Checking if recipe is already favorited using user and recipe IDs. Getting the count
+     * of favorites where userID and recipeID are equal to the ones given. Then, we take that and put it into
+     * an integer. If that integer is not null and the count is larger than 0, return true
+     * @param userID current user
+     * @param recipeID current page recipe ID
+     * @return whether the count is above 0 or not
+     */
+    public boolean isAlreadyFavorite(int userID, int recipeID) {
+        String query = "SELECT COUNT(*) FROM Favorites WHERE userID = ? AND recipeID = ?";
+        //Getting a count of the jdbc query
+        Integer count = jdbcTemplate.queryForObject(query, Integer.class, userID, recipeID);
+        //If there are any favorites, then return true
+        return count != null && count > 0;
     }
 
     /**
@@ -101,6 +154,10 @@ public class RecipeRepository {
         );
     }
 
+    /**
+     * Mapping each part of a comment to the comment model to be grabbable for controller
+     * @return Mapped comment model
+     */
     public RowMapper<Comments> commentsMapper() {
         return (rs, rowNum) -> new Comments(
                 rs.getInt("commentID"),
@@ -109,6 +166,17 @@ public class RecipeRepository {
                 rs.getString("commentText"),
                 rs.getString("timestamp"),
                 rs.getString("username")
+        );
+    }
+
+    /**
+     * Mapper for favorites. Mapping all data
+     * @return Mapped favorites
+     */
+    public RowMapper<Favorites> favoritesMapper() {
+        return (rs, rowNum) -> new Favorites(
+                rs.getInt("userID"),
+                rs.getInt("recipeID")
         );
     }
 }

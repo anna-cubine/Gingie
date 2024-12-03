@@ -178,9 +178,18 @@
     </header>
     <main>
         <div class="favorites">Favorites</div>
-    <div class="cards">
-        <!-- function loadCards() will add the cards -->
-    </div>
+        <button class="card-button" th:each="recipes : ${recipes}">
+            <a th:href="@{/recipe(id=${recipes.recipeID})}">
+                <div class="card">
+                    <img src="/images/cheeseAndCrackers.jpg" alt="[PICTURE]"/>
+                    <div class="card-info">
+                        <strong class="dishName" th:text="${recipes.dishName}"></strong>
+                        <p class="rating" th:text="${recipes.averageRating}"></p> <br/>
+                        <p class="category" th:text="${recipes.categoryID}"></p>
+                    </div>
+                </div>
+            </a>
+        </button>
     </main>
 </div>
 
