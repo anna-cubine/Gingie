@@ -45,7 +45,9 @@ public class MainController {
      * @return category page
      */
     @GetMapping("/category")
-    public String category () {
+    public String category (Model model) {
+        List<RecipeModel> recipes = recipeService.getAllRecipes();
+        model.addAttribute("recipes", recipes);
         return "category";
     }
     
@@ -333,54 +335,28 @@ public class MainController {
         session.setAttribute ( "userID" , null );
         return "redirect:/userProfile";
     }
-    
-    @GetMapping("/browseBreakfast")
-    public String browseBreakfast (Model model) {
-        List<RecipeModel> recipes = recipeService.getRecipeByCategory ( "Breakfast" );
-        model.addAttribute ( "recipes" , recipes );
-        return "browse";
-    }
-    
-    @GetMapping("/browseLunch")
-    public String browseLunch (Model model) {
-        List<RecipeModel> recipes = recipeService.getRecipeByCategory ( "Lunch" );
-        model.addAttribute ( "recipes" , recipes );
-        return "browse";
-    }
-    
-    @GetMapping("/browseDinner")
-    public String browseDinner (Model model) {
-        List<RecipeModel> recipes = recipeService.getRecipeByCategory ( "Dinner" );
-        model.addAttribute ( "recipes" , recipes );
-        return "browse";
-    }
-    
-    @GetMapping("/browseDesert")
-    public String browseDesert (Model model) {
-        List<RecipeModel> recipes = recipeService.getRecipeByCategory ( "Desert" );
-        model.addAttribute ( "recipes" , recipes );
-        return "browse";
-    }
-    
-    @GetMapping("/browseSnacks")
-    public String browseSnacks (Model model) {
-        List<RecipeModel> recipes = recipeService.getRecipeByCategory ( "Snacks" );
-        model.addAttribute ( "recipes" , recipes );
-        return "browse";
-    }
-    
-    @GetMapping("/browseDrinks")
-    public String browseDrinks (Model model) {
-        List<RecipeModel> recipes = recipeService.getRecipeByCategory ( "Drinks" );
-        model.addAttribute ( "recipes" , recipes );
-        return "browse";
-    }
-    
-    
+
+    /**
+     * Mapping for browse secion. A category ID is given and put into a model. To make things simple,
+     * if All is given by clicking the All category button, just get all recipes and return that model.
+     * Otherwise, return the model with whichever category ID. catID is given to the model, again for
+     * simplicity since recipes doesn't have an All category.
+     * @param categoryID Given by clicking a category button in the category page
+     * @param model Model with the recipes and category ID
+     * @return
+     */
     @GetMapping("/browse")
-    public String browse (Model model) {
-        List<RecipeModel> recipes = recipeService.getAllRecipes ( );
-        model.addAttribute ( "recipes" , recipes );
+    public String browse (@RequestParam("id") String categoryID,  Model model) {
+        //List<RecipeModel> recipes = recipeService.getAllRecipes ( );
+        if (categoryID.equals("All")){
+            List<RecipeModel> recipes = recipeService.getAllRecipes();
+            model.addAttribute ( "recipes" , recipes );
+            model.addAttribute("catID", categoryID);
+        } else {
+            List<RecipeModel> recipes = recipeService.getRecipeByCategory(categoryID);
+            model.addAttribute("recipes", recipes);
+            model.addAttribute("catID", categoryID);
+        }
         return "browse";
     }
     

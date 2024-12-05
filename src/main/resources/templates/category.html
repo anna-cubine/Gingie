@@ -187,14 +187,14 @@
     <div class="categories">Categories</div>
 
     <!--Mapping the IDs to certain browse pages which will grab any recipe with that category ID-->
-    <div class="button-grid">
-        <a href="/browseBreakfast"><button class="button">Breakfast</button></a>
-        <a href="/browseLunch"><button class="button">Lunch</button></a>
-        <a href="/browseDinner"><button class="button">Dinner</button></a>
-        <a href="/browseDesert"><button class="button">Dessert</button></a>
-        <a href="/browseSnacks"><button class="button">Snacks</button></a>
-        <a href="/browseDrinks"><button class="button">Drinks</button></a>
-        <a href="/browse"><button class="button">All</button></a>
+    <div class="button-grid" >
+        <a th:href="@{/browse(id=Breakfast)}" ><button class="button">Breakfast</button></a>
+        <a th:href="@{/browse(id=Lunch)}"><button class="button">Lunch</button></a>
+        <a th:href="@{/browse(id=Dinner)}"><button class="button">Dinner</button></a>
+        <a th:href="@{/browse(id=Dessert)}"><button class="button">Dessert</button></a>
+        <a th:href="@{/browse(id=Snacks)}"><button class="button">Snacks</button></a>
+        <a th:href="@{/browse(id=Drinks)}"><button class="button">Drinks</button></a>
+        <a th:href="@{/browse(id=All)}"><button class="button">All</button></a>
     </div>
 </div>
 </div>
