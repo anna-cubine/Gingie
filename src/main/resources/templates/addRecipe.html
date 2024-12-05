@@ -110,6 +110,24 @@
             bottom: 0;
             left: 3px;
         }
+
+        .form {
+            display: flex;
+            margin: 0 auto;
+            flex-direction: column;
+            justify-content: flex-start;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            max-width: 500px;
+        }
+
+        .form-section {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
         .ingredient-item,
         .instruction-item {
             display: flex;
@@ -128,17 +146,17 @@
         }
 
         .add-button {
-            background-color: #28a745;
-            color: white;
+            background-color: white;
+            color: black;
             padding: 5px 10px;
-            border: none;
+            border: 2px solid #ff8c42;
             border-radius: 4px;
             cursor: pointer;
             margin-top: 10px;
         }
 
         .add-button:hover {
-            background-color: #218838;
+            border: 2px solid #e88a3a;
         }
 
         .remove-button {
@@ -153,6 +171,22 @@
         .remove-button:hover {
             background-color: #c82333;
         }
+
+        .submit-button {
+            font-size: 2em;
+            background-color: #28a745;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            background-color: #218838;
+        }
+
     </style>
 </head>
 <body>
@@ -178,8 +212,9 @@
     </header>
 </div>
 <div class="dishContainer">
-    <form th:action="@{/addRecipe}" th:object="${recipe}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/addRecipe}" th:object="${recipe}" class="form" method="post" enctype="multipart/form-data">
         <div class="form-section">
+            <hr>
             <label for="dishName">Dish Name:</label>
             <input type="text" id="dishName" name="dishName" th:field="*{dishName}" required>
         </div>
@@ -204,9 +239,10 @@
         <div class="form-section">
             <label for="ingredients-container">Ingredients:</label>
             <div id="ingredients-container">
+                <hr>
                 <!-- Placeholder for dynamically added fields -->
                 <div class="ingredient-item">
-                    <input type="text" name="ingredients[0]" placeholder="Enter an ingredient" required>
+                    <input type="text" name="ingredients[0]" placeholder="Enter an ingredient" width="50px" required>
                     <button type="button" class="remove-button" onclick="removeField(this)">Remove Ingredient</button>
                 </div>
             </div>
@@ -216,24 +252,28 @@
         <div class="form-section">
             <label for="instructions-container">Instructions:</label>
             <div id="instructions-container">
+                <hr>
                 <!-- Placeholder for dynamically added fields -->
                 <div class="instruction-item">
-                    <textarea name="instructions[0]" rows="3" placeholder="Enter an instruction" required></textarea>
-                    <button type="button" class="remove-button" onclick="removeField(this)">Remove</button>
+                    <textarea name="instructions[0]" rows="3" placeholder="Enter an instruction" cols="20" required></textarea>
+                    <button type="button" class="remove-button" onclick="removeField(this)">Remove Instruction</button>
                 </div>
             </div>
             <button type="button" class="add-button" onclick="addInstruction()">Add Instruction</button>
-
-        <button type="submit">Submit Recipe</button>
+        <br><br>
+        <button class="submit-button" type="submit">Submit Recipe</button>
      </form>
     <script>
+        /**
+         * Adding new ingredients dynamically using an index and sort of "array" of ingredients
+         */
         function addIngredient() {
             //Get the container
             const container = document.getElementById("ingredients-container");
             //Get the index so I can keep track of the
             const index = container.children.length;
             const div = document.createElement("div");
-            div.className="ingredients-item";
+            div.className="ingredient-item";
             //Using an index to keep track of how many times user added ingredient. Did the same for instruction
             div.innerHTML =`<input type="text" name="ingredients[${index}]" placeholder="Enter an ingredient" required>
                 <button type="button" class="remove-button" onclick="removeField(this)">Remove Ingredient</button>`;
@@ -242,16 +282,16 @@
         }
 
         /**
-         *
+         * Adding new instrucitons dynamically the same way I added ingredients
          */
         function addInstruction() {
             const container = document.getElementById("instructions-container");
             const index = container.children.length;
             const div = document.createElement("div");
-            div.className = "instructions-item";
+            div.className = "instruction-item";
 
             div.innerHTML = `<textarea name="instructions[${index}]" rows="3" placeholder="Enter an instruction" required></textarea>
-                <button type="button" class="remove-button" onclick="removeField(this)">Remove</button>`;
+                <button type="button" class="remove-button" onclick="removeField(this)">Remove Instruction</button>`;
             container.append(div);
         }
 

@@ -8,13 +8,23 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #d3d3d3;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 8000px;
+            margin: 0 auto;
+            background-color: #d3d3d3;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: visible;
         }
 
         .header {
-            background-color: #f79c42;
+            background-color: #ff8c42;
             padding: 15px;
             display: flex;
             justify-content: space-between;
@@ -53,7 +63,7 @@
         }
 
         .header-icons button {
-            background-color: #f79c42;
+            background-color: #ff8c42;
             border: none;
             border-radius: 5px;
             padding: 10px;
@@ -96,6 +106,10 @@
             background-color: #f2f2f2;
         }
 
+        main {
+            padding: 20px;
+        }
+
         .content {
             flex: 1;
             display: flex;
@@ -103,6 +117,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            min-height: 85.5vh;
         }
 
         .categories {
@@ -147,26 +162,27 @@
 </head>
 <body>
 
-<div class="header">
-    <div class="logo">
-        <a href="/category"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
-    </div>
-
-    <div class="search-bar">
-        <input type="text" placeholder="Search...">
-    </div>
-
-    <div class="header-icons">
-        <a href="/favorites"><button class="button">⭐</button></a>
-        <button class="button" onclick="toggleDropdown()">👤</button>
-        <div class="dropdown" id="dropdownMenu">
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-            <a href="/userProfile">Profile</a>
+<div class="container">
+    <header class="header">
+        <div class="logo">
+            <a href="../index.html"><img src="/images/Gingie_icon.png" alt="Logo" title="Logo"></a>
         </div>
-    </div>
-</div>
 
+        <div class="search-bar">
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <div class="header-icons">
+            <a href="/favorites"><button class="button">⭐</button></a>
+            <button class="button" onclick="toggleDropdown()">👤</button>
+            <div class="dropdown" id="dropdownMenu">
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+                <a href="/userProfile">Profile</a>
+            </div>
+        </div>
+
+    </header>
 <div class="content">
     <div class="categories">Categories</div>
 
@@ -180,6 +196,7 @@
         <a href="/browseDrinks"><button class="button">Drinks</button></a>
         <a href="/browse"><button class="button">All</button></a>
     </div>
+</div>
 </div>
 
 <div class="footer">

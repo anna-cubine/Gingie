@@ -119,6 +119,22 @@
             border-radius: 4px;
         }
 
+        .add-button {
+            background-color: #28a745;
+            color: white;
+            padding: 9px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .add-button:hover {
+            background-color: #218838;
+        }
+
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -187,11 +203,10 @@
                 <a href="/userProfile">Profile</a>
             </div>
         </div>
-
     </header>
-    <div class="categories">Categories</div>
+    <div class="categories">All</div>
     <a href="/addRecipe">
-        <button>Add a recipe</button>
+        <button class="add-button">Add a recipe</button>
     </a>
     <main>
 
@@ -208,7 +223,7 @@
             </a>
         </button>
     </main>
-    </div>
+</div>
 
     <script>
         function toggleDropdown() {
